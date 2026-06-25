@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>买菜清单</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans Myanmar",sans-serif;background:#f0f4f0;min-height:100vh}
+header{background:#2d6a4f;color:white;padding:14px 16px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+header h1{font-size:17px;font-weight:600}
+.hcount{font-size:12px;background:rgba(255,255,255,0.22);padding:4px 10px;border-radius:12px}
+.toolbar{display:flex;gap:8px;padding:10px 12px;background:white;border-bottom:1px solid #dde8dd}
+.btn{padding:8px 12px;border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit}
+.btn-copy{background:#2d6a4f;color:white;flex:1;font-size:14px}
+.btn-reset{background:#f0f0e8;color:#666}
+.btn-all{background:#e4f0ea;color:#2d6a4f}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;padding:12px}
+.card{background:white;border-radius:14px;overflow:hidden;cursor:pointer;border:2.5px solid transparent;transition:border-color .15s,transform .1s;box-shadow:0 1px 4px rgba(0,0,0,0.07);position:relative;user-select:none;-webkit-tap-highlight-color:transparent}
+.card:active{transform:scale(0.96)}
+.card.sel{border-color:#2d6a4f;background:#f0faf4}
+.tick{display:none;position:absolute;top:7px;right:7px;width:22px;height:22px;background:#2d6a4f;border-radius:50%;align-items:center;justify-content:center;font-size:13px;color:white;font-weight:700;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,0.2)}
+.card.sel .tick{display:flex}
+.cimg{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#e8ede8}
+.cfb{width:100%;aspect-ratio:1/1;display:none;align-items:center;justify-content:center;font-size:44px;background:#e8ede8}
+.cinfo{padding:8px 9px 10px}
+.czh{font-size:13px;font-weight:700;color:#1a1a1a;line-height:1.3;margin-bottom:2px}
+.cmy{font-size:11px;color:#5a8a6a;line-height:1.4;margin-bottom:4px;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif}
+.cqty{font-size:11px;color:#999;line-height:1.3}
+.output{margin:0 12px 16px;background:white;border-radius:12px;padding:12px 14px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+.olabel{font-size:11px;color:#aaa;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px;font-weight:600}
+.otext{font-size:13px;color:#333;line-height:1.9;white-space:pre-wrap;min-height:36px}
+.empty{color:#ccc;font-style:italic;font-size:13px}
+.toast{display:none;position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#2d6a4f;color:white;padding:10px 22px;border-radius:20px;font-size:14px;z-index:999;box-shadow:0 4px 14px rgba(0,0,0,0.2);white-space:nowrap}
+</style>
+</head>
+<body>
+<header>
+  <h1>🥬 买菜清单</h1>
+  <span class="hcount" id="hcount">已选 0 样</span>
+</header>
+<div class="toolbar">
+  <button class="btn btn-all" onclick="selAll()">全选</button>
+  <button class="btn btn-reset" onclick="reset()">清除</button>
+  <button class="btn btn-copy" onclick="copy()">📋 复制清单发给 Vendor</button>
+</div>
+<div class="grid" id="grid"></div>
+<div class="output">
+  <div class="olabel">已选清单预览</div>
+  <div class="otext" id="otext"><span class="empty">未选任何菜品</span></div>
+</div>
+<div class="toast" id="toast">✅ 已复制！可直接发给 Vendor</div>
+<script>
+const items = [
+  {zh:"大饼菇",my:"ပေါ်တိုဘယ်လိုမှို",qty:"1 box",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Portobello_mushroom.jpg/300px-Portobello_mushroom.jpg"},
+  {zh:"甜菜根",my:"ချိုသောဥမြစ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Rote_Beete.jpg/300px-Rote_Beete.jpg"},
+  {zh:"苋菜（大尖）",my:"ဟင်းနုနွယ်ရွက်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Amaranth_sp_2.jpg/300px-Amaranth_sp_2.jpg"},
+  {zh:"四方豆",my:"လေးထောင့်ပဲ",qty:"300g（只要300g就够）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Psophocarpus_tetragonolobus_fruits.jpg/300px-Psophocarpus_tetragonolobus_fruits.jpg"},
+  {zh:"韭黄",my:"အဝါရောင်ကြက်သွန်မြိတ်",qty:"200g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Garlic_Chives_2.jpg/300px-Garlic_Chives_2.jpg"},
+  {zh:"大黄豆芽",my:"ပဲပုပ်အပွင့်",qty:"500g（不要1kg）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Soybean_sprouts_01.jpg/300px-Soybean_sprouts_01.jpg"},
+  {zh:"马来西亚金瓜",my:"မလေးရှားဖရုံသီး",qty:"1pcs（最小粒）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/FruitePotiron.jpg/300px-FruitePotiron.jpg"},
+  {zh:"樱桃番茄（红）",my:"ချယ်ရီခရမ်း（နီ）",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Tomato_je.jpg/300px-Tomato_je.jpg"},
+  {zh:"韭菜",my:"ကြက်သွန်မြိတ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Garlic_Chives_2.jpg/300px-Garlic_Chives_2.jpg"},
+  {zh:"白蘑菇",my:"အဖြူမှို",qty:"1 box（最小盒150g）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Agaricus_bisporus%2C_white_button_mushrooms.jpg/300px-Agaricus_bisporus%2C_white_button_mushrooms.jpg"},
+  {zh:"茄子",my:"ခရမ်းသီး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Solanum_melongena_0.1.jpg/300px-Solanum_melongena_0.1.jpg"},
+  {zh:"红苋菜",my:"နီသောဟင်းနုနွယ်",qty:"500g（缺货给圆苋菜，都没有就算了）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Amaranthus_cruentus_flowering.jpg/300px-Amaranthus_cruentus_flowering.jpg"},
+  {zh:"樱桃番茄（黄）",my:"ချယ်ရီခရမ်း（အဝါ）",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Yellow_cherry_tomatoes.jpg/300px-Yellow_cherry_tomatoes.jpg"},
+  {zh:"百叶豆腐",my:"ပဲပြားပဲပိစပ်",qty:"1 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Tofu_spread.jpg/300px-Tofu_spread.jpg"},
+  {zh:"山药",my:"တောင်ဥ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Yam_on_white.jpg/300px-Yam_on_white.jpg"},
+  {zh:"老鼠粉",my:"ကြွက်ဆန်ခေါက်ဆွဲ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Rice-vermicelli.jpg/300px-Rice-vermicelli.jpg"},
+  {zh:"荷兰豆",my:"နယ်သာလန်ပဲ",qty:"2 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Snap_peas.jpg/300px-Snap_peas.jpg"},
+  {zh:"美国芦笋",my:"အမေရိကန်မြက်ဦး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Asparagus_officinalis_0.02.jpg/300px-Asparagus_officinalis_0.02.jpg"},
+  {zh:"长豆",my:"ရှည်သောပဲ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Yard_long_bean_edit.jpg/300px-Yard_long_bean_edit.jpg"},
+  {zh:"小豆苗",my:"ပဲပင်ငယ်",qty:"2 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Pea_shoots.jpg/300px-Pea_shoots.jpg"},
+  {zh:"青生菜",my:"အစိမ်းဆာလတ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Iceberg_lettuce.jpg/300px-Iceberg_lettuce.jpg"},
+  {zh:"杏鲍菇",my:"ကင်ပွန်းမှို",qty:"2 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Pleurotus_eryngii_2.jpg/300px-Pleurotus_eryngii_2.jpg"},
+  {zh:"金马仑白萝卜",my:"ကာမရွန်မြင့်ကုန်းဖြူဥ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Daikon_Radish.jpg/300px-Daikon_Radish.jpg"},
+  {zh:"西洋菜",my:"ရေနှင်းဆီ",qty:"250g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Watercress_2.jpg/300px-Watercress_2.jpg"},
+  {zh:"扁豆",my:"ပြားသောပဲ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Flat_green_beans.jpg/300px-Flat_green_beans.jpg"},
+  {zh:"红包菜",my:"နီသောဂေါ်ဖီထုပ်",qty:"1pcs（最小的）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Chou_rouge_2.jpg/300px-Chou_rouge_2.jpg"},
+  {zh:"薄荷叶",my:"မိန့်ရွက်",qty:"100g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Spearmint_Mentha_spicata.jpg/300px-Spearmint_Mentha_spicata.jpg"},
+  {zh:"红灯笼椒",my:"နီသောငရုတ်ချိုသီး",qty:"300g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Pimentao.jpg/300px-Pimentao.jpg"},
+  {zh:"大白菜",my:"တရုတ်ဂေါ်ဖီ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Napa_cabbage.jpg/300px-Napa_cabbage.jpg"},
+  {zh:"金马仑包菜",my:"ကာမရွန်မြင့်ကုန်းဂေါ်ဖီ",qty:"1pcs",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Chou_cabus_rouge.jpg/300px-Chou_cabus_rouge.jpg"},
+  {zh:"圆苋菜",my:"ဝိုင်းသောဟင်းနုနွယ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Amaranth_sp_2.jpg/300px-Amaranth_sp_2.jpg"},
+  {zh:"豆干",my:"ပဲပြောင်းခြောက်",qty:"1 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Tofu_spread.jpg/300px-Tofu_spread.jpg"},
+  {zh:"马蹄",my:"ရေခြေထောက်",qty:"300g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Water_chestnut.jpg/300px-Water_chestnut.jpg"},
+  {zh:"黄灯笼椒",my:"အဝါငရုတ်ချိုသီး",qty:"300g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Yellow_bell_pepper.jpg/300px-Yellow_bell_pepper.jpg"},
+  {zh:"松菇",my:"မှိုမွှေး",qty:"2 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Tricholoma_matsutake_3.jpg/300px-Tricholoma_matsutake_3.jpg"},
+  {zh:"西生菜",my:"နုပ်နုပ်ဆာလတ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Iceberg_lettuce.jpg/300px-Iceberg_lettuce.jpg"},
+  {zh:"黄面",my:"ဝါသောခေါက်ဆွဲ（ဝိုင်း）",qty:"500g（圆）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Yellow_noodles.jpg/300px-Yellow_noodles.jpg"},
+  {zh:"西兰花",my:"ဂေါ်ဖီထုပ်စိမ်း",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Broccoli_and_cross_section_edit.jpg/300px-Broccoli_and_cross_section_edit.jpg"},
+  {zh:"红大葱",my:"ကြက်သွန်နီကြီး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Shallot.jpg/300px-Shallot.jpg"},
+  {zh:"紫天椒",my:"ခရမ်းရောင်ငရုတ်သီး",qty:"100g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Capsicum_annuum_-_Chili_pepper_variety_-_02.jpg/300px-Capsicum_annuum_-_Chili_pepper_variety_-_02.jpg"},
+  {zh:"日本毛瓜",my:"ဂျပန်သခွားသီး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Cucumbers_on_white.jpg/300px-Cucumbers_on_white.jpg"},
+  {zh:"四季豆",my:"လေးရာသီပဲ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/GreenBeans.jpg/300px-GreenBeans.jpg"},
+  {zh:"西芹",my:"ဆဲလ်လာရီ",qty:"1 bundle（最小的就够）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Celery_cross_section.jpg/300px-Celery_cross_section.jpg"},
+  {zh:"甜豆",my:"ချိုသောပဲ",qty:"2 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Snap_peas.jpg/300px-Snap_peas.jpg"},
+  {zh:"白松菇",my:"အဖြူပျော့မှို",qty:"2 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Agaricus_bisporus%2C_white_button_mushrooms.jpg/300px-Agaricus_bisporus%2C_white_button_mushrooms.jpg"},
+  {zh:"珍珠茄子",my:"ပုလဲခရမ်းသီး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Solanum_melongena_0.1.jpg/300px-Solanum_melongena_0.1.jpg"},
+  {zh:"小青辣椒",my:"ငယ်သောအစိမ်းငရုတ်",qty:"100g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Thai_peppers.jpg/300px-Thai_peppers.jpg"},
+  {zh:"青萝卜",my:"အစိမ်းရောင်ဥ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Daikon_Radish.jpg/300px-Daikon_Radish.jpg"},
+  {zh:"玉米",my:"ပြောင်းဖူး",qty:"1 pair",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Cornus_%28shelled%29.jpg/300px-Cornus_%28shelled%29.jpg"},
+  {zh:"小苦瓜",my:"ငယ်သောကြက်ဆူသီး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Bitter_melon.jpg/300px-Bitter_melon.jpg"},
+  {zh:"莴笋",my:"ဆာလတ်ကြမ်း",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Lactuca_sativa_Celtuce.jpg/300px-Lactuca_sativa_Celtuce.jpg"},
+  {zh:"鲍鱼菇",my:"ကမာမှို",qty:"2 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Oyster_mushrooms_%28Pleurotus_ostreatus%29.jpg/300px-Oyster_mushrooms_%28Pleurotus_ostreatus%29.jpg"},
+  {zh:"本地冬瓜",my:"ဒေသထွက်ဆောင်းဖရုံ",qty:"1pcs（1粒最小的，不要2粒）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Winter-Melon-Wax-Gourd.jpg/300px-Winter-Melon-Wax-Gourd.jpg"},
+  {zh:"小酸柑",my:"ငယ်သောချဉ်သောသံပရာ",qty:"100g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Calamansi.jpg/300px-Calamansi.jpg"},
+  {zh:"黄柠檬",my:"အဝါသံပရာ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Lemon_-_whole_and_split.jpg/300px-Lemon_-_whole_and_split.jpg"},
+  {zh:"粗米粉",my:"ကြမ်းသောဆန်ခေါက်ဆွဲ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Rice-vermicelli.jpg/300px-Rice-vermicelli.jpg"},
+  {zh:"日本吊瓜",my:"ဂျပန်တင်းသခွား",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Cucumbers_on_white.jpg/300px-Cucumbers_on_white.jpg"},
+  {zh:"红盒豆腐",my:"နီပုံးပဲပိစပ်",qty:"1 box",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Tofu_spread.jpg/300px-Tofu_spread.jpg"},
+  {zh:"佛手瓜",my:"ဗုဒ္ဓလက်ဖရုံ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Chayote_-_single.jpg/300px-Chayote_-_single.jpg"},
+  {zh:"香港芥兰",my:"ဟောင်ကောင်မုန်ညင်း",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Kai-lan.jpg/300px-Kai-lan.jpg"},
+  {zh:"上海青",my:"ရှန်ဟိုင်းပဲပုပ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Bok_choy.jpg/300px-Bok_choy.jpg"},
+  {zh:"芫荽",my:"နံနံပင်",qty:"100g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Coriander.jpg/300px-Coriander.jpg"},
+  {zh:"空心菜",my:"ရေဟင်းခတ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Water_spinach_1.jpg/300px-Water_spinach_1.jpg"},
+  {zh:"香菇",my:"မွှေးသောမှို",qty:"200g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Shiitakemushroom.jpg/300px-Shiitakemushroom.jpg"},
+  {zh:"奶白菜",my:"နို့ပဲပုပ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Bok_choy.jpg/300px-Bok_choy.jpg"},
+  {zh:"红萝卜",my:"မုန်လာဥနီ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Vegetable-Carrot-Bundle-wm.jpg/300px-Vegetable-Carrot-Bundle-wm.jpg"},
+  {zh:"香港菠菜",my:"ဟောင်ကောင်ဟင်းနုနွယ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Spinach_leaves.jpg/300px-Spinach_leaves.jpg"},
+  {zh:"香麦",my:"မွှေးဆာလတ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Lactuca_sativa_Celtuce.jpg/300px-Lactuca_sativa_Celtuce.jpg"},
+  {zh:"番茄",my:"ခရမ်းချဉ်သီး",qty:"500g x2",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Tomato_je.jpg/300px-Tomato_je.jpg"},
+  {zh:"青柠檬",my:"အစိမ်းသံပရာ",qty:"100g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Hapus_Mango.jpg/300px-Hapus_Mango.jpg"},
+  {zh:"龙凤苗",my:"နဂါးဖိနစ်ပင်ငယ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Pea_shoots.jpg/300px-Pea_shoots.jpg"},
+  {zh:"马铃薯",my:"အာလူး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Patates.jpg/300px-Patates.jpg"},
+  {zh:"老姜",my:"နနွင်းကြီး",qty:"200g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Ingwer.jpg/300px-Ingwer.jpg"},
+  {zh:"苦瓜",my:"ကြက်ဆူသီး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Bitter_melon.jpg/300px-Bitter_melon.jpg"},
+  {zh:"角豆",my:"ဒါလ်ပဲ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Yard_long_bean_edit.jpg/300px-Yard_long_bean_edit.jpg"},
+  {zh:"帝皇苗",my:"ဘုရင်ပင်ငယ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Pea_shoots.jpg/300px-Pea_shoots.jpg"},
+  {zh:"蜜糖番薯",my:"ပျားရည်မြည်းဥ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Ipomoea_batatas_006.jpg/300px-Ipomoea_batatas_006.jpg"},
+  {zh:"菜花",my:"ပန်းဂေါ်ဖီ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Cauliflower_2.jpg/300px-Cauliflower_2.jpg"},
+  {zh:"粿条",my:"ကွေးကော်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Rice-vermicelli.jpg/300px-Rice-vermicelli.jpg"},
+  {zh:"蛋豆腐",my:"ဥပဲပိစပ်",qty:"2 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Tofu_spread.jpg/300px-Tofu_spread.jpg"},
+  {zh:"青灯笼椒",my:"အစိမ်းငရုတ်ချိုသီး",qty:"300g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Pimentao.jpg/300px-Pimentao.jpg"},
+  {zh:"同欧",my:"တုံအို",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Lactuca_sativa_Celtuce.jpg/300px-Lactuca_sativa_Celtuce.jpg"},
+  {zh:"豆卜",my:"ပဲပွ",qty:"1 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Tofu_spread.jpg/300px-Tofu_spread.jpg"},
+  {zh:"罗马生菜",my:"ရောမဆာလတ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Romaine_lettuce.jpg/300px-Romaine_lettuce.jpg"},
+  {zh:"老黄瓜",my:"ကြီးသောသခွားသီး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Cucumbers_on_white.jpg/300px-Cucumbers_on_white.jpg"}
+];
+
+const sel=new Set();
+
+function render(){
+  const g=document.getElementById('grid');
+  g.innerHTML='';
+  items.forEach((item,i)=>{
+    const c=document.createElement('div');
+    c.className='card'+(sel.has(i)?' sel':'');
+    c.innerHTML=`<div class="tick">✓</div>
+<img class="cimg" src="${item.img}" alt="${item.zh}" loading="lazy"
+  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+<div class="cfb">🥬</div>
+<div class="cinfo">
+  <div class="czh">${item.zh}</div>
+  <div class="cmy">${item.my}</div>
+  <div class="cqty">${item.qty}</div>
+</div>`;
+    c.onclick=()=>toggle(i,c);
+    g.appendChild(c);
+  });
+  update();
+}
+
+function toggle(i,c){
+  sel.has(i)?sel.delete(i):sel.add(i);
+  c.classList.toggle('sel');
+  update();
+}
+
+function update(){
+  document.getElementById('hcount').textContent='已选 '+sel.size+' 样';
+  const o=document.getElementById('otext');
+  if(!sel.size){o.innerHTML='<span class="empty">未选任何菜品</span>';return;}
+  const lines=[...sel].sort((a,b)=>a-b).map(i=>'• '+items[i].zh+' '+items[i].qty);
+  o.textContent=lines.join('\n');
+}
+
+function copy(){
+  if(!sel.size){alert('请先选择菜品');return;}
+  const lines=[...sel].sort((a,b)=>a-b).map(i=>'• '+items[i].zh+' '+items[i].qty);
+  const txt=lines.join('\n');
+  navigator.clipboard.writeText(txt).then(toast).catch(()=>{
+    const ta=document.createElement('textarea');
+    ta.value=txt;document.body.appendChild(ta);ta.select();
+    document.execCommand('copy');document.body.removeChild(ta);toast();
+  });
+}
+
+function toast(){
+  const t=document.getElementById('toast');
+  t.style.display='block';
+  setTimeout(()=>t.style.display='none',2500);
+}
+
+function reset(){sel.clear();render();}
+function selAll(){items.forEach((_,i)=>sel.add(i));render();}
+render();
+</script>
+</body>
+</html>
