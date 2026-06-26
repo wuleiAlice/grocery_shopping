@@ -3,53 +3,100 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>买菜清单</title>
+<title>买菜清单 / စာရင်း</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans Myanmar",sans-serif;background:#f0f4f0;min-height:100vh}
-header{background:#2d6a4f;color:white;padding:14px 16px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
-header h1{font-size:17px;font-weight:600}
-.hcount{font-size:12px;background:rgba(255,255,255,0.22);padding:4px 10px;border-radius:12px}
-.toolbar{display:flex;gap:8px;padding:10px 12px;background:white;border-bottom:1px solid #dde8dd}
-.btn{padding:8px 12px;border:none;border-radius:8px;font-size:13px;font-weight:500;cursor:pointer;font-family:inherit}
-.btn-copy{background:#2d6a4f;color:white;flex:1;font-size:14px}
-.btn-reset{background:#f0f0e8;color:#666}
-.btn-all{background:#e4f0ea;color:#2d6a4f}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;padding:12px}
+header{background:#2d6a4f;color:white;padding:14px 20px;position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.htitle{display:flex;flex-direction:column;gap:2px}
+.htitle-zh{font-size:17px;font-weight:700}
+.htitle-my{font-size:12px;opacity:0.8;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif}
+.hcount{text-align:right}
+.hcount-zh{font-size:13px;background:rgba(255,255,255,0.22);padding:4px 10px;border-radius:12px;display:block}
+.hcount-my{font-size:10px;opacity:0.75;margin-top:3px;display:block;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif;text-align:center}
+.toolbar{display:flex;gap:8px;padding:10px 16px;background:white;border-bottom:1px solid #dde8dd}
+.btn{padding:0;border:none;border-radius:10px;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px}
+.btn-zh{font-size:13px;font-weight:600}
+.btn-my{font-size:10px;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif;opacity:0.8}
+.btn-copy{background:#2d6a4f;color:white;flex:1;padding:9px 12px}
+.btn-reset{background:#f0f0e8;color:#555;padding:9px 14px}
+.btn-all{background:#e4f0ea;color:#2d6a4f;padding:9px 14px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:14px 16px;max-width:900px;margin:0 auto}
+@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr);gap:10px;padding:10px 12px}}
 .card{background:white;border-radius:14px;overflow:hidden;cursor:pointer;border:2.5px solid transparent;transition:border-color .15s,transform .1s;box-shadow:0 1px 4px rgba(0,0,0,0.07);position:relative;user-select:none;-webkit-tap-highlight-color:transparent}
-.card:active{transform:scale(0.96)}
+.card:active{transform:scale(0.97)}
 .card.sel{border-color:#2d6a4f;background:#f0faf4}
-.tick{display:none;position:absolute;top:7px;right:7px;width:22px;height:22px;background:#2d6a4f;border-radius:50%;align-items:center;justify-content:center;font-size:13px;color:white;font-weight:700;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,0.2)}
+.tick{display:none;position:absolute;top:7px;right:7px;min-width:24px;height:24px;padding:0 6px;background:#2d6a4f;border-radius:12px;align-items:center;justify-content:center;font-size:12px;color:white;font-weight:700;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,0.2)}
 .card.sel .tick{display:flex}
-.cimg{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;background:#e8ede8}
-.cfb{width:100%;aspect-ratio:1/1;display:none;align-items:center;justify-content:center;font-size:44px;background:#e8ede8}
-.cinfo{padding:8px 9px 10px}
-.czh{font-size:13px;font-weight:700;color:#1a1a1a;line-height:1.3;margin-bottom:2px}
-.cmy{font-size:11px;color:#5a8a6a;line-height:1.4;margin-bottom:4px;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif}
+.csvg{width:100%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;background:#f8f8f4;padding:8px}
+.csvg svg{width:100%;height:100%}
+.cinfo{padding:8px 10px 11px}
+.czh{font-size:13px;font-weight:700;color:#1a1a1a;line-height:1.3;margin-bottom:3px}
+.cmy{font-size:11px;color:#3a7a5a;line-height:1.5;margin-bottom:4px;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif}
 .cqty{font-size:11px;color:#999;line-height:1.3}
-.output{margin:0 12px 16px;background:white;border-radius:12px;padding:12px 14px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
-.olabel{font-size:11px;color:#aaa;margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px;font-weight:600}
-.otext{font-size:13px;color:#333;line-height:1.9;white-space:pre-wrap;min-height:36px}
+.output-wrap{max-width:900px;margin:0 auto;padding:0 16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:600px){.output-wrap{grid-template-columns:1fr}}
+.output{background:white;border-radius:12px;padding:14px 16px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
+
+.output-zh{border-top:3px solid #2d6a4f}.output-my{border-top:3px solid #a0522d}.olabel{font-size:11px;text-transform:uppercase;letter-spacing:.4px;font-weight:600;margin-bottom:8px;display:block}.olabel-zh{color:#2d6a4f}
+.olabel-my{color:#a0522d;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif;letter-spacing:0}
+.otext{font-size:13px;color:#333;line-height:1.9;white-space:pre-wrap;min-height:36px}.otext-my{font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif;font-size:12px}
 .empty{color:#ccc;font-style:italic;font-size:13px}
-.toast{display:none;position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#2d6a4f;color:white;padding:10px 22px;border-radius:20px;font-size:14px;z-index:999;box-shadow:0 4px 14px rgba(0,0,0,0.2);white-space:nowrap}
+
+.cat-section{max-width:900px;margin:0 auto;padding:0 16px}
+.cat-header{display:flex;align-items:center;gap:10px;padding:14px 4px 8px;cursor:pointer;user-select:none}
+.cat-title-zh{font-size:15px;font-weight:700;color:#1a1a1a}
+.cat-title-my{font-size:11px;color:#5a8a6a;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif}
+.cat-count{font-size:11px;color:#aaa;margin-left:auto}
+.cat-toggle{font-size:12px;color:#aaa;transition:transform 0.2s}
+.cat-header.collapsed .cat-toggle{transform:rotate(-90deg)}
+.cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding-bottom:8px}
+.cat-grid.hidden{display:none}
+@media(max-width:600px){.cat-grid{grid-template-columns:repeat(2,1fr)}}
+
+.toast{display:none;position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#2d6a4f;color:white;padding:11px 24px;border-radius:20px;font-size:13px;z-index:999;box-shadow:0 4px 14px rgba(0,0,0,0.2);white-space:nowrap;text-align:center;line-height:1.6}
+.toast-my{font-size:11px;opacity:0.85;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif}
 </style>
 </head>
 <body>
 <header>
-  <h1>🥬 买菜清单</h1>
-  <span class="hcount" id="hcount">已选 0 样</span>
+  <div class="htitle">
+    <span class="htitle-zh">🥬 买菜清单</span>
+    <span class="htitle-my">ဟင်းသီးဟင်းရွက် စာရင်း</span>
+  </div>
+  <div class="hcount">
+    <span class="hcount-zh" id="hcount-zh">已选 0 样</span>
+    <span class="hcount-my" id="hcount-my">၀ မျိုး ရွေးထား</span>
+  </div>
 </header>
 <div class="toolbar">
-  <button class="btn btn-all" onclick="selAll()">全选</button>
-  <button class="btn btn-reset" onclick="reset()">清除</button>
-  <button class="btn btn-copy" onclick="copy()">📋 复制清单发给 Vendor</button>
+  <button class="btn btn-all" onclick="selAll()">
+    <span class="btn-zh">全选</span>
+    <span class="btn-my">အားလုံးရွေး</span>
+  </button>
+  <button class="btn btn-reset" onclick="reset()">
+    <span class="btn-zh">清除</span>
+    <span class="btn-my">ဖျက်မည်</span>
+  </button>
+  <button class="btn btn-copy" onclick="copy()">
+    <span class="btn-zh">📋 复制清单发给 Vendor</span>
+    <span class="btn-my">စာရင်းကူးယူမည်</span>
+  </button>
 </div>
-<div class="grid" id="grid"></div>
-<div class="output">
-  <div class="olabel">已选清单预览</div>
-  <div class="otext" id="otext"><span class="empty">未选任何菜品</span></div>
+<div id="categories"></div>
+<div class="output-wrap">
+  <div class="output output-zh">
+    <span class="olabel olabel-zh">已选清单 — 发给 Vendor</span>
+    <div class="otext" id="otext-zh"><span class="empty">未选任何菜品</span></div>
+  </div>
+  <div class="output output-my">
+    <span class="olabel olabel-my">ရွေးထားသောစာရင်း — စစ်ဆေးရန်</span>
+    <div class="otext otext-my" id="otext-my"><span class="empty">မရွေးရသေးပါ</span></div>
+  </div>
 </div>
-<div class="toast" id="toast">✅ 已复制！可直接发给 Vendor</div>
+<div class="toast" id="toast">
+  ✅ 已复制！可直接发给 Vendor<br>
+  <span class="toast-my">ကူးယူပြီးပါပြီ</span>
+</div>
 <script>
 const items = [
   {zh:"大饼菇",my:"ပေါ်တိုဘယ်လိုမှို",qty:"1 box",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Portobello_mushroom.jpg/300px-Portobello_mushroom.jpg"},
@@ -139,63 +186,236 @@ const items = [
   {zh:"老黄瓜",my:"ကြီးသောသခွားသီး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Cucumbers_on_white.jpg/300px-Cucumbers_on_white.jpg"}
 ];
 
-const sel=new Set();
+const categories = [
+  {zh:"🍄 菌菇类",my:"မှိုအမျိုးအစား",indices:[0, 9, 21, 34, 44, 51, 63]},
+  {zh:"🥬 叶菜类",my:"အရွက်ဟင်းသီးဟင်းရွက်",indices:[2, 4, 5, 8, 11, 17, 19, 20, 23, 25, 26, 28, 29, 30, 35, 37, 42, 59, 60, 61, 62, 64, 66, 67, 70, 75, 81, 83]},
+  {zh:"🥕 根茎类",my:"အမြစ်နှင့်အတောင်အမျိုးအစား",indices:[1, 14, 22, 32, 47, 48, 50, 65, 71, 72, 76, 77]},
+  {zh:"🫘 豆类",my:"ပဲအမျိုးအစား",indices:[3, 16, 18, 24, 41, 43, 74]},
+  {zh:"🍆 瓜茄类",my:"သခွားသီးနှင့်ခရမ်းသီးအမျိုးအစား",indices:[6, 10, 40, 45, 49, 52, 56, 58, 73, 84]},
+  {zh:"🌶️ 椒类",my:"ငရုတ်သီးအမျိုးအစား",indices:[27, 33, 39, 46, 80]},
+  {zh:"🍅 番茄类",my:"ခရမ်းချဉ်သီးအမျိုးအစား",indices:[7, 12, 68]},
+  {zh:"🍋 柑橘类",my:"သံပရာအမျိုးအစား",indices:[53, 54, 69]},
+  {zh:"🟨 豆腐类",my:"ပဲပိစပ်အမျိုးအစား",indices:[13, 31, 57, 79, 82]},
+  {zh:"🍜 面食类",my:"ခေါက်ဆွဲအမျိုးအစား",indices:[15, 36, 55, 78]},
+  {zh:"🧅 葱类",my:"ကြက်သွန်နီအမျိုးအစား",indices:[38]}
+];
 
-function render(){
-  const g=document.getElementById('grid');
-  g.innerHTML='';
-  items.forEach((item,i)=>{
-    const c=document.createElement('div');
-    c.className='card'+(sel.has(i)?' sel':'');
-    c.innerHTML=`<div class="tick">✓</div>
-<img class="cimg" src="${item.img}" alt="${item.zh}" loading="lazy"
-  onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-<div class="cfb">🥬</div>
-<div class="cinfo">
-  <div class="czh">${item.zh}</div>
-  <div class="cmy">${item.my}</div>
-  <div class="cqty">${item.qty}</div>
-</div>`;
-    c.onclick=()=>toggle(i,c);
-    g.appendChild(c);
-  });
-  update();
-}
+const svgs = {
+  "大饼菇": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="55" rx="35" ry="12" fill="#c8a876"/><ellipse cx="50" cy="40" rx="38" ry="18" fill="#8B4513"/><ellipse cx="50" cy="38" rx="36" ry="16" fill="#a0522d"/><rect x="44" y="52" width="12" height="18" fill="#d4b896" rx="3"/></svg>`,
+  "甜菜根": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="58" r="28" fill="#8B0000"/><circle cx="50" cy="58" r="28" fill="#9B1B30"/><path d="M50 30 Q45 15 42 8" stroke="#2d5a27" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M50 30 Q55 18 58 10" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M50 30 Q60 20 65 14" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="30" rx="6" ry="4" fill="#2d5a27"/></svg>`,
+  "苋菜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 85 Q35 70 30 55 Q25 40 35 30 Q45 20 50 25 Q55 20 65 30 Q75 40 70 55 Q65 70 50 85Z" fill="#228B22"/><path d="M50 85 Q50 60 50 25" stroke="#1a6b1a" stroke-width="2" fill="none"/><path d="M35 50 Q50 45 65 50" stroke="#1a6b1a" stroke-width="1.5" fill="none"/></svg>`,
+  "四方豆": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="35" width="60" height="30" rx="5" fill="#3a7d3a"/><rect x="22" y="37" width="56" height="26" rx="4" fill="#4a9a4a"/><circle cx="35" cy="50" r="6" fill="#2d5a2d"/><circle cx="50" cy="50" r="6" fill="#2d5a2d"/><circle cx="65" cy="50" r="6" fill="#2d5a2d"/><path d="M20 50 Q10 45 12 38" stroke="#3a7d3a" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+  "韭黄": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M35 85 Q33 60 35 20" stroke="#c8b820" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M45 85 Q43 55 46 18" stroke="#d4c422" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M55 85 Q53 55 56 18" stroke="#c8b820" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M65 85 Q63 60 65 22" stroke="#d4c422" stroke-width="6" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="88" rx="20" ry="5" fill="#a08820"/></svg>`,
+  "大黄豆芽": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 80 Q50 55 55 40 Q62 25 60 20" stroke="#d4d4a0" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="60" cy="17" rx="10" ry="7" fill="#c8b800" transform="rotate(-20,60,17)"/><path d="M45 80 Q44 60 42 45 Q38 30 40 22" stroke="#d4d4a0" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="39" cy="19" rx="8" ry="6" fill="#c8b800" transform="rotate(15,39,19)"/><ellipse cx="50" cy="83" rx="15" ry="5" fill="#b8a870"/></svg>`,
+  "马来西亚金瓜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="58" rx="32" ry="26" fill="#e07b00"/><path d="M30 52 Q50 45 70 52" stroke="#c06800" stroke-width="2" fill="none"/><path d="M28 58 Q50 50 72 58" stroke="#c06800" stroke-width="2" fill="none"/><path d="M30 64 Q50 56 70 64" stroke="#c06800" stroke-width="2" fill="none"/><path d="M50 32 Q48 22 50 18" stroke="#2d5a27" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M50 22 Q58 16 62 14" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+  "樱桃番茄红": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="38" cy="58" r="18" fill="#e02020"/><circle cx="62" cy="58" r="18" fill="#e02020"/><circle cx="38" cy="58" r="16" fill="#e83030"/><circle cx="62" cy="58" r="16" fill="#e83030"/><circle cx="34" cy="53" r="4" fill="#ff6060" opacity="0.5"/><circle cx="58" cy="53" r="4" fill="#ff6060" opacity="0.5"/><path d="M38 40 Q40 30 45 25" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M62 40 Q62 30 60 24" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M45 25 Q52 22 60 24" stroke="#2d5a27" stroke-width="2.5" fill="none"/></svg>`,
+  "韭菜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M35 85 Q33 60 35 20" stroke="#228B22" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M45 85 Q43 55 46 18" stroke="#2d9b2d" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M55 85 Q53 55 56 18" stroke="#228B22" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M65 85 Q63 60 65 22" stroke="#2d9b2d" stroke-width="6" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="88" rx="20" ry="5" fill="#1a6b1a"/></svg>`,
+  "白蘑菇": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="48" rx="32" ry="22" fill="#e8e0d0"/><ellipse cx="50" cy="46" rx="30" ry="20" fill="#f0ead8"/><rect x="43" y="60" width="14" height="20" rx="4" fill="#e8e0d0"/><ellipse cx="50" cy="80" rx="12" ry="4" fill="#d0c8b8"/></svg>`,
+  "茄子": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="62" rx="22" ry="30" fill="#6B238E"/><ellipse cx="50" cy="60" rx="20" ry="28" fill="#7B2F9E"/><circle cx="44" cy="52" r="5" fill="#9B4FBE" opacity="0.5"/><path d="M50 32 Q48 22 46 16" stroke="#2d5a27" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M50 32 Q58 24 62 20" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="33" rx="8" ry="5" fill="#2d5a27" transform="rotate(-10,50,33)"/></svg>`,
+  "红苋菜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 85 Q35 70 30 55 Q25 40 35 30 Q45 20 50 25 Q55 20 65 30 Q75 40 70 55 Q65 70 50 85Z" fill="#c0392b"/><path d="M50 85 Q50 60 50 25" stroke="#8B0000" stroke-width="2" fill="none"/><path d="M35 50 Q50 45 65 50" stroke="#8B0000" stroke-width="1.5" fill="none"/></svg>`,
+  "樱桃番茄黄": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="38" cy="58" r="18" fill="#e8c000"/><circle cx="62" cy="58" r="18" fill="#e8c000"/><circle cx="38" cy="58" r="16" fill="#f0d000"/><circle cx="62" cy="58" r="16" fill="#f0d000"/><circle cx="34" cy="53" r="4" fill="#fff080" opacity="0.5"/><circle cx="58" cy="53" r="4" fill="#fff080" opacity="0.5"/><path d="M38 40 Q40 30 45 25" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M62 40 Q62 30 60 24" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M45 25 Q52 22 60 24" stroke="#2d5a27" stroke-width="2.5" fill="none"/></svg>`,
+  "百叶豆腐": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="30" width="60" height="45" rx="4" fill="#f5f0e0"/><line x1="20" y1="40" x2="80" y2="40" stroke="#e0d8c0" stroke-width="1.5"/><line x1="20" y1="50" x2="80" y2="50" stroke="#e0d8c0" stroke-width="1.5"/><line x1="20" y1="60" x2="80" y2="60" stroke="#e0d8c0" stroke-width="1.5"/><line x1="20" y1="70" x2="80" y2="70" stroke="#e0d8c0" stroke-width="1.5"/><rect x="20" y="30" width="60" height="45" rx="4" fill="none" stroke="#c8c0a0" stroke-width="2"/></svg>`,
+  "山药": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="55" rx="15" ry="32" fill="#c8b89a" transform="rotate(-15,50,55)"/><ellipse cx="50" cy="53" rx="13" ry="30" fill="#d4c4a6" transform="rotate(-15,50,53)"/><ellipse cx="35" cy="58" rx="10" ry="22" fill="#c8b89a" transform="rotate(10,35,58)"/></svg>`,
+  "老鼠粉": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M20 40 Q35 35 50 40 Q65 45 80 40" stroke="#f0ead0" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M15 52 Q32 46 50 52 Q68 58 85 52" stroke="#f0ead0" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M20 64 Q35 58 52 64 Q67 70 80 64" stroke="#f0ead0" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M25 76 Q40 70 55 76 Q68 82 78 76" stroke="#f0ead0" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
+  "荷兰豆": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M15 50 Q30 25 50 22 Q70 19 82 35 Q88 45 82 55 Q70 75 50 78 Q30 81 18 65 Q12 58 15 50Z" fill="#4a9a4a"/><circle cx="35" cy="50" r="7" fill="#2d7a2d"/><circle cx="50" cy="48" r="7" fill="#2d7a2d"/><circle cx="65" cy="50" r="7" fill="#2d7a2d"/></svg>`,
+  "美国芦笋": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="38" y="35" width="8" height="50" rx="4" fill="#5a8a3a"/><path d="M42 35 Q38 25 42 18 Q46 25 42 35Z" fill="#3a6a2a"/><rect x="50" y="40" width="7" height="45" rx="3.5" fill="#5a8a3a"/><path d="M53.5 40 Q50 30 53.5 23 Q57 30 53.5 40Z" fill="#3a6a2a"/><rect x="27" y="42" width="7" height="43" rx="3.5" fill="#5a8a3a"/><path d="M30.5 42 Q27 32 30.5 25 Q34 32 30.5 42Z" fill="#3a6a2a"/><ellipse cx="42" cy="87" rx="22" ry="5" fill="#8B6914"/></svg>`,
+  "长豆": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M25 15 Q28 50 30 85" stroke="#3a7d3a" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M45 12 Q48 48 48 85" stroke="#4a9a4a" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M65 15 Q66 50 68 85" stroke="#3a7d3a" stroke-width="7" fill="none" stroke-linecap="round"/></svg>`,
+  "小豆苗": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 80 Q50 60 52 45" stroke="#8ab830" stroke-width="3" fill="none"/><path d="M52 45 Q45 35 40 28" stroke="#8ab830" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M40 28 Q32 22 30 18" stroke="#8ab830" stroke-width="2" fill="none"/><ellipse cx="36" cy="33" rx="10" ry="6" fill="#a0d040" transform="rotate(-30,36,33)"/><path d="M52 52 Q60 42 65 36" stroke="#8ab830" stroke-width="2.5" fill="none" stroke-linecap="round"/><ellipse cx="62" cy="40" rx="10" ry="6" fill="#a0d040" transform="rotate(20,62,40)"/></svg>`,
+  "青生菜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="55" r="32" fill="#d0e8a0"/><circle cx="50" cy="52" r="28" fill="#b8d880"/><circle cx="50" cy="50" r="22" fill="#c8e890"/><circle cx="50" cy="50" r="14" fill="#e8f8c0"/><circle cx="50" cy="50" r="8" fill="#f0ffd0"/></svg>`,
+  "杏鲍菇": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="35" rx="25" ry="15" fill="#c8b89a"/><rect x="42" y="40" width="16" height="40" rx="8" fill="#d4c4a6"/><ellipse cx="50" cy="80" rx="12" ry="4" fill="#b8a886"/></svg>`,
+  "金马仑白萝卜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 25 Q62 28 65 50 Q65 72 50 85 Q35 72 35 50 Q38 28 50 25Z" fill="#f5f5f0"/><path d="M50 25 Q50 55 50 85" stroke="#e0e0d8" stroke-width="1.5" fill="none"/><path d="M38 45 Q50 42 62 45" stroke="#e0e0d8" stroke-width="1.5" fill="none"/><path d="M36 55 Q50 52 64 55" stroke="#e0e0d8" stroke-width="1.5" fill="none"/><path d="M50 25 Q45 15 42 10" stroke="#4a8a3a" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M50 25 Q55 15 58 10" stroke="#4a8a3a" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M50 25 Q52 14 50 8" stroke="#4a8a3a" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+  "西洋菜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="55" r="14" fill="#2d8b2d"/><circle cx="50" cy="48" r="16" fill="#35a035"/><circle cx="70" cy="55" r="14" fill="#2d8b2d"/><circle cx="40" cy="68" r="12" fill="#35a035"/><circle cx="60" cy="68" r="12" fill="#2d8b2d"/><path d="M30 55 Q40 65 50 68 Q60 65 70 55" stroke="#1a6b1a" stroke-width="2" fill="none"/></svg>`,
+  "扁豆": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M15 50 Q25 30 50 28 Q75 26 82 45 Q86 58 75 70 Q60 82 40 78 Q18 72 15 50Z" fill="#5aaa3a"/><path d="M20 50 Q28 36 50 34 Q72 32 78 48" stroke="#3a8020" stroke-width="1.5" fill="none"/></svg>`,
+  "红包菜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="58" r="30" fill="#8B0045"/><circle cx="50" cy="55" r="25" fill="#9B1055"/><circle cx="50" cy="53" r="18" fill="#a82060"/><circle cx="50" cy="52" r="10" fill="#b83070"/><circle cx="50" cy="52" r="5" fill="#c84080"/></svg>`,
+  "薄荷叶": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 75 Q30 60 28 45 Q26 30 38 22 Q50 15 62 22 Q74 30 72 45 Q70 60 50 75Z" fill="#00a050"/><path d="M50 75 Q50 45 50 20" stroke="#008040" stroke-width="2" fill="none"/><path d="M36 38 Q50 34 64 38" stroke="#008040" stroke-width="1.5" fill="none"/><path d="M33 50 Q50 46 67 50" stroke="#008040" stroke-width="1.5" fill="none"/><path d="M36 62 Q50 58 64 62" stroke="#008040" stroke-width="1.5" fill="none"/></svg>`,
+  "红灯笼椒": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 28 Q68 28 74 48 Q78 65 68 76 Q58 86 50 84 Q42 86 32 76 Q22 65 26 48 Q32 28 50 28Z" fill="#e02020"/><path d="M50 28 Q50 55 50 84" stroke="#c01010" stroke-width="2" fill="none"/><path d="M35 50 Q50 46 65 50" stroke="#c01010" stroke-width="1.5" fill="none"/><path d="M50 28 Q50 20 52 14" stroke="#2d5a27" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M52 16 Q58 12 60 10" stroke="#2d5a27" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg>`,
+  "大白菜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 82 Q30 72 28 55 Q26 38 38 28 Q44 23 50 25 Q56 23 62 28 Q74 38 72 55 Q70 72 50 82Z" fill="#d0e8a0"/><path d="M50 82 Q50 52 50 25" stroke="#a8c870" stroke-width="3" fill="none"/><path d="M35 48 Q50 44 65 48" stroke="#a8c870" stroke-width="2" fill="none"/><path d="M33 58 Q50 54 67 58" stroke="#a8c870" stroke-width="2" fill="none"/><path d="M36 68 Q50 64 64 68" stroke="#a8c870" stroke-width="2" fill="none"/></svg>`,
+  "金马仑包菜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="55" r="30" fill="#90c840"/><circle cx="50" cy="52" r="25" fill="#a8d850"/><circle cx="50" cy="50" r="18" fill="#b8e060"/><circle cx="50" cy="50" r="10" fill="#c8e870"/><circle cx="50" cy="50" r="5" fill="#d8f080"/></svg>`,
+  "圆苋菜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="38" cy="45" r="16" fill="#228B22"/><circle cx="58" cy="42" r="14" fill="#2d9b2d"/><circle cx="48" cy="62" r="15" fill="#1a7a1a"/><circle cx="30" cy="62" r="12" fill="#228B22"/><circle cx="65" cy="60" r="13" fill="#2d9b2d"/></svg>`,
+  "豆干": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="22" y="28" width="56" height="44" rx="4" fill="#c8a870"/><rect x="25" y="31" width="50" height="38" rx="3" fill="#d4b880"/><line x1="50" y1="28" x2="50" y2="72" stroke="#b89860" stroke-width="2"/><line x1="22" y1="50" x2="78" y2="50" stroke="#b89860" stroke-width="2"/></svg>`,
+  "马蹄": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="55" r="26" fill="#8B6914"/><circle cx="50" cy="53" r="24" fill="#a07820"/><circle cx="50" cy="52" r="18" fill="#f5e8c0"/><circle cx="50" cy="52" r="12" fill="#fff0d0"/><path d="M50 29 Q50 22 50 18" stroke="#4a3010" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
+  "黄灯笼椒": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 28 Q68 28 74 48 Q78 65 68 76 Q58 86 50 84 Q42 86 32 76 Q22 65 26 48 Q32 28 50 28Z" fill="#e8c000"/><path d="M50 28 Q50 55 50 84" stroke="#c0a000" stroke-width="2" fill="none"/><path d="M35 50 Q50 46 65 50" stroke="#c0a000" stroke-width="1.5" fill="none"/><path d="M50 28 Q50 20 52 14" stroke="#2d5a27" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
+  "松菇": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="42" rx="30" ry="20" fill="#8B6914"/><ellipse cx="50" cy="40" rx="28" ry="18" fill="#a07820"/><rect x="44" y="55" width="12" height="22" rx="4" fill="#c8a870"/><ellipse cx="50" cy="38" rx="20" ry="10" fill="#c8a060" opacity="0.5"/></svg>`,
+  "西生菜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="55" r="30" fill="#c0e080"/><circle cx="50" cy="53" r="25" fill="#d0e890"/><circle cx="50" cy="51" r="18" fill="#e0f0a0"/><circle cx="50" cy="51" r="10" fill="#f0f8c0"/></svg>`,
+  "黄面": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M20 38 Q35 32 50 38 Q65 44 80 38" stroke="#e8c840" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M15 52 Q32 45 50 52 Q68 59 85 52" stroke="#e8c840" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M20 66 Q35 59 52 66 Q67 73 80 66" stroke="#d8b830" stroke-width="6" fill="none" stroke-linecap="round"/></svg>`,
+  "西兰花": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="38" r="18" fill="#228B22"/><circle cx="33" cy="48" r="14" fill="#2d9b2d"/><circle cx="67" cy="48" r="14" fill="#228B22"/><circle cx="42" cy="30" r="10" fill="#35aa35"/><circle cx="60" cy="30" r="10" fill="#2d9b2d"/><rect x="44" y="60" width="12" height="22" rx="4" fill="#5a8a3a"/></svg>`,
+  "红大葱": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="65" rx="20" ry="22" fill="#9B1B30"/><ellipse cx="50" cy="63" rx="18" ry="20" fill="#b02040"/><path d="M50 43 Q48 30 46 18" stroke="#c8c840" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M50 43 Q52 30 54 18" stroke="#d0d050" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
+  "紫天椒": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 78 Q38 65 36 50 Q34 35 42 26 Q50 18 58 26 Q66 35 64 50 Q62 65 50 78Z" fill="#6B238E"/><path d="M50 78 Q50 52 50 22" stroke="#5a1a7a" stroke-width="1.5" fill="none"/><path d="M50 26 Q50 18 52 12" stroke="#2d5a27" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
+  "日本毛瓜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="55" rx="16" ry="32" fill="#7ab830" transform="rotate(-10,50,55)"/><ellipse cx="50" cy="53" rx="14" ry="30" fill="#8ac840" transform="rotate(-10,50,53)"/><path d="M58 26 Q62 18 60 14" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/><line x1="36" y1="45" x2="64" y2="40" stroke="#5a9020" stroke-width="1.5"/><line x1="35" y1="55" x2="65" y2="50" stroke="#5a9020" stroke-width="1.5"/><line x1="36" y1="65" x2="64" y2="60" stroke="#5a9020" stroke-width="1.5"/></svg>`,
+  "四季豆": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M20 45 Q35 30 55 32 Q75 34 80 50 Q82 62 70 70 Q55 78 38 72 Q22 65 20 45Z" fill="#5aaa3a"/><circle cx="38" cy="52" r="5" fill="#3a8020" opacity="0.6"/><circle cx="52" cy="50" r="5" fill="#3a8020" opacity="0.6"/><circle cx="65" cy="53" r="5" fill="#3a8020" opacity="0.6"/></svg>`,
+  "西芹": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M30 85 Q28 60 32 25 Q35 15 38 12" stroke="#5a9a2a" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M46 85 Q45 60 48 22 Q50 14 52 11" stroke="#6aaa3a" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M62 85 Q62 60 64 26 Q66 16 68 13" stroke="#5a9a2a" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M32 25 Q20 20 18 14" stroke="#8ab840" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M48 22 Q40 16 38 10" stroke="#8ab840" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M64 26 Q72 20 74 14" stroke="#8ab840" stroke-width="5" fill="none" stroke-linecap="round"/></svg>`,
+  "甜豆": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M15 50 Q25 28 50 25 Q75 22 83 42 Q88 56 78 68 Q65 82 45 78 Q20 72 15 50Z" fill="#6aba4a"/><circle cx="36" cy="50" r="7" fill="#4a9a2a"/><circle cx="52" cy="48" r="7" fill="#4a9a2a"/><circle cx="66" cy="52" r="7" fill="#4a9a2a"/></svg>`,
+  "白松菇": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="45" rx="28" ry="18" fill="#f0ece0"/><ellipse cx="50" cy="43" rx="26" ry="16" fill="#f8f4e8"/><rect x="44" y="58" width="12" height="20" rx="4" fill="#f0ece0"/><ellipse cx="50" cy="78" rx="10" ry="3.5" fill="#e0dcd0"/></svg>`,
+  "珍珠茄子": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="38" cy="58" r="16" fill="#6B238E"/><circle cx="58" cy="55" r="16" fill="#7B2F9E"/><circle cx="48" cy="70" r="14" fill="#6B238E"/><path d="M50 35 Q48 25 50 20" stroke="#2d5a27" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="36" rx="8" ry="5" fill="#2d5a27" transform="rotate(-10,50,36)"/></svg>`,
+  "小青辣椒": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 78 Q38 65 36 50 Q34 35 42 26 Q50 18 58 26 Q66 35 64 50 Q62 65 50 78Z" fill="#3a9a20"/><path d="M50 78 Q50 52 50 22" stroke="#2a7a10" stroke-width="1.5" fill="none"/><path d="M50 26 Q50 18 52 12" stroke="#2d5a27" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
+  "青萝卜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 25 Q62 28 65 50 Q65 72 50 85 Q35 72 35 50 Q38 28 50 25Z" fill="#5aaa3a"/><path d="M50 25 Q50 55 50 85" stroke="#3a8a20" stroke-width="1.5" fill="none"/><path d="M50 25 Q45 15 42 10" stroke="#4a8a3a" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M50 25 Q55 15 58 10" stroke="#4a8a3a" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+  "玉米": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="55" rx="18" ry="30" fill="#e8c000"/><path d="M35 35 Q40 55 38 75" stroke="#d4e870" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M65 35 Q60 55 62 75" stroke="#d4e870" stroke-width="3" fill="none" stroke-linecap="round"/><line x1="35" y1="42" x2="65" y2="42" stroke="#c8a800" stroke-width="1.5"/><line x1="34" y1="50" x2="66" y2="50" stroke="#c8a800" stroke-width="1.5"/><line x1="34" y1="58" x2="66" y2="58" stroke="#c8a800" stroke-width="1.5"/><line x1="35" y1="66" x2="65" y2="66" stroke="#c8a800" stroke-width="1.5"/><path d="M50 25 Q48 15 50 10" stroke="#2d5a27" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
+  "小苦瓜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="55" rx="16" ry="30" fill="#7ab830"/><ellipse cx="50" cy="55" rx="14" ry="28" fill="#8ac840"/><circle cx="44" cy="38" r="5" fill="#6aa020"/><circle cx="56" cy="42" r="5" fill="#6aa020"/><circle cx="44" cy="55" r="5" fill="#6aa020"/><circle cx="56" cy="60" r="5" fill="#6aa020"/><circle cx="44" cy="70" r="5" fill="#6aa020"/><path d="M50 25 Q50 18 52 13" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+  "莴笋": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="60" rx="14" ry="28" fill="#7ab830"/><path d="M36 45 Q28 38 26 30" stroke="#5a9820" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M38 38 Q32 28 32 20" stroke="#5a9820" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M64 45 Q72 38 74 30" stroke="#5a9820" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M62 38 Q68 28 68 20" stroke="#5a9820" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
+  "鲍鱼菇": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M20 55 Q22 38 35 30 Q48 22 60 28 Q72 34 75 48 Q78 62 68 70 Q55 78 40 72 Q22 65 20 55Z" fill="#d4c8b0"/><path d="M20 55 Q35 52 50 55 Q65 58 75 48" stroke="#b8aa90" stroke-width="2" fill="none"/><rect x="45" y="68" width="10" height="16" rx="4" fill="#c8bc9a"/></svg>`,
+  "本地冬瓜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="55" rx="30" ry="25" fill="#8ab870"/><ellipse cx="50" cy="53" rx="28" ry="23" fill="#a0c880"/><path d="M25 50 Q50 44 75 50" stroke="#6a9850" stroke-width="2" fill="none"/><path d="M50 30 Q50 22 52 16" stroke="#2d5a27" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
+  "小酸柑": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="55" r="24" fill="#d4a820"/><circle cx="50" cy="53" r="22" fill="#e0b830"/><circle cx="50" cy="53" r="18" fill="#e8c840" opacity="0.7"/><path d="M50 31 Q50 23 52 18" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="44" cy="48" r="3" fill="#c8a020" opacity="0.5"/></svg>`,
+  "黄柠檬": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="55" rx="26" ry="24" fill="#e8d000"/><ellipse cx="50" cy="53" rx="24" ry="22" fill="#f0dc10"/><path d="M50 31 Q48 23 46 18" stroke="#c8b000" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M70 42 Q76 38 78 35" stroke="#c8b000" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="44" cy="48" r="4" fill="#fff8a0" opacity="0.5"/></svg>`,
+  "粗米粉": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M18 42 Q35 36 52 42 Q69 48 82 42" stroke="#f8f0d8" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M15 56 Q34 48 52 56 Q70 64 85 56" stroke="#f8f0d8" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M18 70 Q35 63 53 70 Q69 77 82 70" stroke="#e8e0c8" stroke-width="6" fill="none" stroke-linecap="round"/></svg>`,
+  "日本吊瓜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="58" rx="18" ry="28" fill="#7ab830"/><ellipse cx="50" cy="56" rx="16" ry="26" fill="#8ac840"/><line x1="34" y1="45" x2="66" y2="40" stroke="#5a9020" stroke-width="1.5"/><line x1="33" y1="55" x2="67" y2="50" stroke="#5a9020" stroke-width="1.5"/><line x1="34" y1="65" x2="66" y2="60" stroke="#5a9020" stroke-width="1.5"/><path d="M50 30 Q50 22 52 16" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+  "红盒豆腐": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="18" y="25" width="64" height="55" rx="5" fill="#e02020"/><rect x="22" y="35" width="56" height="38" rx="3" fill="#f8f0e0"/><rect x="18" y="25" width="64" height="12" rx="5" fill="#c01010"/></svg>`,
+  "佛手瓜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 25 Q68 28 72 48 Q74 65 62 76 Q55 83 50 80 Q45 83 38 76 Q26 65 28 48 Q32 28 50 25Z" fill="#a8c870"/><path d="M50 80 Q50 58 50 25" stroke="#88a850" stroke-width="2" fill="none"/><path d="M32 52 Q50 48 68 52" stroke="#88a850" stroke-width="1.5" fill="none"/></svg>`,
+  "香港芥兰": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 82 Q32 68 30 52 Q28 38 38 28" stroke="#2d7a2d" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M50 82 Q68 68 70 52 Q72 38 62 28" stroke="#2d7a2d" stroke-width="5" fill="none" stroke-linecap="round"/><ellipse cx="32" cy="42" rx="16" ry="10" fill="#35aa35" transform="rotate(-30,32,42)"/><ellipse cx="68" cy="42" rx="16" ry="10" fill="#2d9b2d" transform="rotate(30,68,42)"/><ellipse cx="50" cy="30" rx="18" ry="11" fill="#35aa35"/></svg>`,
+  "上海青": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 82 Q50 58 50 35" stroke="#d0e890" stroke-width="10" fill="none" stroke-linecap="round"/><ellipse cx="30" cy="48" rx="18" ry="12" fill="#2d9b2d" transform="rotate(-20,30,48)"/><ellipse cx="70" cy="48" rx="18" ry="12" fill="#228B22" transform="rotate(20,70,48)"/><ellipse cx="50" cy="32" rx="20" ry="13" fill="#35aa35"/></svg>`,
+  "芫荽": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 80 Q50 55 52 35" stroke="#6ab830" stroke-width="3" fill="none"/><circle cx="38" cy="30" r="10" fill="#5aaa20"/><circle cx="55" cy="24" r="10" fill="#6aba30"/><circle cx="68" cy="32" r="9" fill="#5aaa20"/><circle cx="30" cy="42" r="8" fill="#6aba30"/><circle cx="70" cy="45" r="8" fill="#5aaa20"/><path d="M42 30 Q46 32 52 35" stroke="#4a9010" stroke-width="2" fill="none"/><path d="M58 26 Q55 30 52 35" stroke="#4a9010" stroke-width="2" fill="none"/></svg>`,
+  "空心菜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 82 Q40 65 38 50 Q36 35 45 25" stroke="#3a8a20" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M50 82 Q60 65 62 50 Q64 35 55 25" stroke="#3a8a20" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="35" cy="38" rx="16" ry="10" fill="#4aaa30" transform="rotate(-25,35,38)"/><ellipse cx="65" cy="38" rx="16" ry="10" fill="#3a9a20" transform="rotate(25,65,38)"/><ellipse cx="50" cy="28" rx="15" ry="9" fill="#4aaa30"/></svg>`,
+  "香菇": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="44" rx="32" ry="22" fill="#6B4423"/><ellipse cx="50" cy="42" rx="30" ry="20" fill="#7B5433"/><path d="M30 42 Q50 36 70 42" stroke="#8B6443" stroke-width="3" fill="none"/><path d="M28 48 Q50 42 72 48" stroke="#8B6443" stroke-width="2" fill="none"/><rect x="44" y="60" width="12" height="20" rx="4" fill="#a08060"/><ellipse cx="50" cy="80" rx="10" ry="4" fill="#8B6843"/></svg>`,
+  "奶白菜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 82 Q50 58 50 35" stroke="#f0f8e0" stroke-width="12" fill="none" stroke-linecap="round"/><ellipse cx="28" cy="50" rx="18" ry="12" fill="#35aa35" transform="rotate(-25,28,50)"/><ellipse cx="72" cy="50" rx="18" ry="12" fill="#228B22" transform="rotate(25,72,50)"/><ellipse cx="50" cy="33" rx="20" ry="13" fill="#35aa35"/></svg>`,
+  "红萝卜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 25 Q65 30 66 52 Q65 72 50 85 Q35 72 34 52 Q35 30 50 25Z" fill="#e06820"/><path d="M50 25 Q50 55 50 85" stroke="#c05010" stroke-width="1.5" fill="none"/><path d="M50 25 Q44 14 40 8" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M50 25 Q50 14 50 8" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M50 25 Q56 14 60 8" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+  "香港菠菜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 82 Q50 62 50 42" stroke="#3a8a20" stroke-width="3" fill="none"/><ellipse cx="34" cy="50" rx="18" ry="12" fill="#2d9b2d" transform="rotate(-20,34,50)"/><ellipse cx="66" cy="50" rx="18" ry="12" fill="#228B22" transform="rotate(20,66,50)"/><ellipse cx="50" cy="38" rx="18" ry="12" fill="#35aa35"/><ellipse cx="34" cy="66" rx="16" ry="10" fill="#2d9b2d" transform="rotate(-15,34,66)"/><ellipse cx="66" cy="66" rx="16" ry="10" fill="#228B22" transform="rotate(15,66,66)"/></svg>`,
+  "香麦": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 82 Q50 58 52 35" stroke="#5a9a20" stroke-width="3" fill="none"/><ellipse cx="36" cy="42" rx="18" ry="10" fill="#6aaa30" transform="rotate(-25,36,42)"/><ellipse cx="64" cy="42" rx="18" ry="10" fill="#5a9a20" transform="rotate(25,64,42)"/><ellipse cx="50" cy="30" rx="20" ry="10" fill="#6aaa30"/><ellipse cx="36" cy="58" rx="16" ry="9" fill="#5a9a20" transform="rotate(-20,36,58)"/><ellipse cx="64" cy="58" rx="16" ry="9" fill="#6aaa30" transform="rotate(20,64,58)"/></svg>`,
+  "番茄": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="57" r="28" fill="#e02020"/><circle cx="50" cy="55" r="26" fill="#e83030"/><circle cx="44" cy="48" r="6" fill="#ff5050" opacity="0.4"/><path d="M50 29 Q48 20 50 16" stroke="#2d5a27" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M50 20 Q42 14 38 12" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M50 20 Q58 14 62 12" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+  "青柠檬": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="55" rx="26" ry="24" fill="#5ab820"/><ellipse cx="50" cy="53" rx="24" ry="22" fill="#6aca30"/><path d="M50 31 Q48 23 46 18" stroke="#3a9800" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M70 42 Q76 38 78 35" stroke="#3a9800" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="44" cy="48" r="4" fill="#a0e860" opacity="0.5"/></svg>`,
+  "龙凤苗": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 78 Q50 55 52 38" stroke="#8ab830" stroke-width="3" fill="none"/><path d="M52 38 Q44 28 38 22" stroke="#8ab830" stroke-width="2.5" fill="none"/><ellipse cx="34" cy="26" rx="11" ry="7" fill="#a0d040" transform="rotate(-25,34,26)"/><path d="M52 48 Q62 38 68 32" stroke="#8ab830" stroke-width="2.5" fill="none"/><ellipse cx="65" cy="36" rx="11" ry="7" fill="#a0d040" transform="rotate(20,65,36)"/><path d="M52 58 Q44 50 40 44" stroke="#8ab830" stroke-width="2" fill="none"/><ellipse cx="37" cy="47" rx="9" ry="6" fill="#b0e050" transform="rotate(-20,37,47)"/></svg>`,
+  "马铃薯": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="55" rx="28" ry="22" fill="#c8a870" transform="rotate(-10,50,55)"/><ellipse cx="50" cy="53" rx="26" ry="20" fill="#d4b880" transform="rotate(-10,50,53)"/><circle cx="38" cy="46" r="3" fill="#a08050"/><circle cx="60" cy="52" r="3" fill="#a08050"/><circle cx="45" cy="62" r="3" fill="#a08050"/></svg>`,
+  "老姜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M25 58 Q28 48 38 45 Q48 42 52 50 Q56 42 66 40 Q76 38 78 50 Q80 62 68 68 Q58 72 52 65 Q46 72 35 72 Q22 70 25 58Z" fill="#c8a040"/><path d="M52 50 Q52 65 52 65" stroke="#a08030" stroke-width="2" fill="none"/></svg>`,
+  "苦瓜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="55" rx="16" ry="30" fill="#7ab830"/><ellipse cx="50" cy="55" rx="14" ry="28" fill="#8ac840"/><circle cx="43" cy="36" r="5" fill="#6aa020"/><circle cx="57" cy="42" r="5" fill="#6aa020"/><circle cx="43" cy="54" r="5" fill="#6aa020"/><circle cx="57" cy="60" r="5" fill="#6aa020"/><circle cx="43" cy="70" r="5" fill="#6aa020"/><circle cx="57" cy="76" r="5" fill="#6aa020"/><path d="M50 25 Q50 18 52 13" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+  "角豆": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M22 42 Q28 22 45 20 Q62 18 72 30 Q80 42 76 58 Q70 74 58 78 Q42 82 32 70 Q20 58 22 42Z" fill="#5aaa3a"/><circle cx="40" cy="50" r="6" fill="#3a8020" opacity="0.6"/><circle cx="55" cy="48" r="6" fill="#3a8020" opacity="0.6"/><circle cx="65" cy="55" r="6" fill="#3a8020" opacity="0.6"/></svg>`,
+  "帝皇苗": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 78 Q50 55 52 35" stroke="#6aba20" stroke-width="3" fill="none"/><path d="M52 35 Q43 24 36 18" stroke="#6aba20" stroke-width="2.5" fill="none"/><ellipse cx="32" cy="21" rx="12" ry="8" fill="#90d840" transform="rotate(-25,32,21)"/><path d="M52 44 Q63 34 70 27" stroke="#6aba20" stroke-width="2.5" fill="none"/><ellipse cx="67" cy="31" rx="12" ry="8" fill="#90d840" transform="rotate(20,67,31)"/></svg>`,
+  "蜜糖番薯": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="58" rx="26" ry="22" fill="#e06820" transform="rotate(-8,50,58)"/><ellipse cx="50" cy="56" rx="24" ry="20" fill="#e87830" transform="rotate(-8,50,56)"/><path d="M50 36 Q48 26 46 20" stroke="#6B238E" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M50 36 Q54 26 56 20" stroke="#6B238E" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+  "菜花": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="42" r="16" fill="#f5f0e0"/><circle cx="34" cy="50" r="12" fill="#f0ead8"/><circle cx="66" cy="50" r="12" fill="#f5f0e0"/><circle cx="42" cy="34" r="10" fill="#f0ead8"/><circle cx="58" cy="34" r="10" fill="#f5f0e0"/><path d="M36 62 Q38 72 36 78" stroke="#5a8a3a" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M50 65 Q50 75 50 80" stroke="#5a8a3a" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M64 62 Q62 72 64 78" stroke="#5a8a3a" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
+  "粿条": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M15 38 Q32 32 50 38 Q68 44 85 38" stroke="#f8f0d8" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M12 54 Q30 47 50 54 Q70 61 88 54" stroke="#f0e8d0" stroke-width="8" fill="none" stroke-linecap="round"/><path d="M15 70 Q32 63 50 70 Q68 77 85 70" stroke="#f8f0d8" stroke-width="7" fill="none" stroke-linecap="round"/></svg>`,
+  "蛋豆腐": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="22" y="30" width="56" height="44" rx="6" fill="#f8e890"/><rect x="22" y="30" width="56" height="44" rx="6" fill="none" stroke="#e0d070" stroke-width="2"/><line x1="50" y1="30" x2="50" y2="74" stroke="#e0d070" stroke-width="1.5"/><line x1="22" y1="52" x2="78" y2="52" stroke="#e0d070" stroke-width="1.5"/></svg>`,
+  "青灯笼椒": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 28 Q68 28 74 48 Q78 65 68 76 Q58 86 50 84 Q42 86 32 76 Q22 65 26 48 Q32 28 50 28Z" fill="#3a9a20"/><path d="M50 28 Q50 55 50 84" stroke="#2a7a10" stroke-width="2" fill="none"/><path d="M35 50 Q50 46 65 50" stroke="#2a7a10" stroke-width="1.5" fill="none"/><path d="M50 28 Q50 20 52 14" stroke="#2d5a27" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
+  "同欧": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 82 Q32 68 30 52 Q28 36 40 26 Q50 18 60 26 Q72 36 70 52 Q68 68 50 82Z" fill="#4a9a2a"/><path d="M50 82 Q50 52 50 20" stroke="#2a7a0a" stroke-width="2" fill="none"/><path d="M34 48 Q50 44 66 48" stroke="#2a7a0a" stroke-width="1.5" fill="none"/><path d="M33 60 Q50 56 67 60" stroke="#2a7a0a" stroke-width="1.5" fill="none"/></svg>`,
+  "豆卜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="22" y="28" width="24" height="24" rx="4" fill="#e8d090"/><rect x="54" y="28" width="24" height="24" rx="4" fill="#d8c080"/><rect x="22" y="58" width="24" height="24" rx="4" fill="#d8c080"/><rect x="54" y="58" width="24" height="24" rx="4" fill="#e8d090"/></svg>`,
+  "罗马生菜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 82 Q38 68 36 52 Q34 36 42 26 Q50 18 58 26 Q66 36 64 52 Q62 68 50 82Z" fill="#5aaa2a"/><path d="M50 82 Q50 52 50 20" stroke="#3a8a0a" stroke-width="3" fill="none"/><path d="M36 46 Q50 42 64 46" stroke="#3a8a0a" stroke-width="2" fill="none"/><path d="M35 58 Q50 54 65 58" stroke="#3a8a0a" stroke-width="2" fill="none"/><path d="M36 68 Q50 64 64 68" stroke="#3a8a0a" stroke-width="2" fill="none"/></svg>`,
+  "老黄瓜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="55" rx="18" ry="30" fill="#c8a040"/><ellipse cx="50" cy="53" rx="16" ry="28" fill="#d4ac50"/><line x1="34" y1="42" x2="66" y2="38" stroke="#a88030" stroke-width="1.5"/><line x1="33" y1="52" x2="67" y2="48" stroke="#a88030" stroke-width="1.5"/><line x1="33" y1="62" x2="67" y2="58" stroke="#a88030" stroke-width="1.5"/><line x1="34" y1="72" x2="66" y2="68" stroke="#a88030" stroke-width="1.5"/><path d="M50 25 Q50 18 52 13" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
+};
 
-function toggle(i,c){
-  sel.has(i)?sel.delete(i):sel.add(i);
-  c.classList.toggle('sel');
-  update();
-}
+const sel=new Map();
+let counter=0;
 
-function update(){
-  document.getElementById('hcount').textContent='已选 '+sel.size+' 样';
-  const o=document.getElementById('otext');
-  if(!sel.size){o.innerHTML='<span class="empty">未选任何菜品</span>';return;}
-  const lines=[...sel].sort((a,b)=>a-b).map(i=>'• '+items[i].zh+' '+items[i].qty);
-  o.textContent=lines.join('\n');
-}
+
+
 
 function copy(){
-  if(!sel.size){alert('请先选择菜品');return;}
-  const lines=[...sel].sort((a,b)=>a-b).map(i=>'• '+items[i].zh+' '+items[i].qty);
+  if(!sel.size){alert('请先选择菜品 / ဟင်းသီးဟင်းရွက် ရွေးချယ်ပါ');return;}
+  const lines=[...sel.entries()].sort((a,b)=>a[1]-b[1]).map(([i])=>'• '+items[i].zh+' '+items[i].qty);
   const txt=lines.join('\n');
-  navigator.clipboard.writeText(txt).then(toast).catch(()=>{
+  navigator.clipboard.writeText(txt).then(showToast).catch(()=>{
     const ta=document.createElement('textarea');
     ta.value=txt;document.body.appendChild(ta);ta.select();
-    document.execCommand('copy');document.body.removeChild(ta);toast();
+    document.execCommand('copy');document.body.removeChild(ta);showToast();
   });
 }
 
-function toast(){
+function showToast(){
   const t=document.getElementById('toast');
   t.style.display='block';
   setTimeout(()=>t.style.display='none',2500);
 }
 
-function reset(){sel.clear();render();}
-function selAll(){items.forEach((_,i)=>sel.add(i));render();}
-render();
+function renderCategories(){
+  const container=document.getElementById('categories');
+  container.innerHTML='';
+  categories.forEach((cat,ci)=>{
+    const sec=document.createElement('div');
+    sec.className='cat-section';
+    const hdr=document.createElement('div');
+    hdr.className='cat-header';
+    hdr.innerHTML='<span class="cat-title-zh">'+cat.zh+'</span><span class="cat-title-my">'+cat.my+'</span><span class="cat-count" id="cat-count-'+ci+'"></span><span class="cat-toggle">&#9662;</span>';
+    hdr.onclick=function(){
+      const grid=document.getElementById('cat-grid-'+ci);
+      grid.classList.toggle('hidden');
+      hdr.classList.toggle('collapsed');
+    };
+    const grid=document.createElement('div');
+    grid.className='cat-grid';
+    grid.id='cat-grid-'+ci;
+    cat.indices.forEach(function(i){
+      const item=items[i];
+      const c=document.createElement('div');
+      c.className='card'+(sel.has(i)?' sel':'');
+      c.id='card-'+i;
+      const order=sel.has(i)?sel.get(i):'';
+      const svgKey=item.zh.replace(/\uff08.*?\uff09/g,'').replace(/[\uff08\uff09()\s]/g,'');
+      const svgHtml=svgs[item.zh]||svgs[svgKey]||'<svg viewBox="0 0 100 100"><text x="50" y="60" text-anchor="middle" font-size="40">\ud83e\udd6c</text></svg>';
+      const imgSrc='imgs/'+String(i+1).padStart(2,'0')+'_'+item.zh.replace(/[\uff08\uff09\u0028\u0029\s]/g,'')+'.png';
+      const tick=document.createElement('div');
+      tick.className='tick';
+      tick.textContent=order;
+      const imgWrap=document.createElement('div');
+      imgWrap.className='csvg';
+      imgWrap.id='csvg-'+i;
+      const img=document.createElement('img');
+      img.style.cssText='width:100%;height:100%;object-fit:cover;display:block';
+      img.src=imgSrc;
+      img.alt=item.zh;
+      img.onerror=function(){imgWrap.innerHTML=svgHtml;};
+      imgWrap.appendChild(img);
+      const info=document.createElement('div');
+      info.className='cinfo';
+      info.innerHTML='<div class="czh">'+item.zh+'</div><div class="cmy">'+item.my+'</div><div class="cqty">'+item.qty+'</div>';
+      c.appendChild(tick);
+      c.appendChild(imgWrap);
+      c.appendChild(info);
+      c.onclick=function(){toggle(i);};
+      grid.appendChild(c);
+    });
+    sec.appendChild(hdr);
+    sec.appendChild(grid);
+    container.appendChild(sec);
+  });
+  updateCatCounts();
+}
+
+function updateCatCounts(){
+  categories.forEach(function(cat,ci){
+    const n=cat.indices.filter(function(i){return sel.has(i);}).length;
+    const el=document.getElementById('cat-count-'+ci);
+    if(el) el.textContent=n>0?n+' 已选':'';
+  });
+}
+
+function toggle(i){
+  if(sel.has(i)){
+    sel.delete(i);
+    const sorted=[...sel.entries()].sort((a,b)=>a[1]-b[1]);
+    counter=0;sel.clear();
+    sorted.forEach(([idx])=>{counter++;sel.set(idx,counter);});
+    items.forEach(function(_,idx){
+      const c=document.getElementById('card-'+idx);
+      if(!c) return;
+      if(sel.has(idx)){c.classList.add('sel');c.querySelector('.tick').textContent=sel.get(idx);}
+      else{c.classList.remove('sel');c.querySelector('.tick').textContent='';}
+    });
+  } else {
+    counter++;
+    sel.set(i,counter);
+    const c=document.getElementById('card-'+i);
+    if(c){c.classList.add('sel');c.querySelector('.tick').textContent=counter;}
+  }
+  update();
+  updateCatCounts();
+}
+
+function update(){
+  const n=sel.size;
+  document.getElementById('hcount-zh').textContent='\u5df2\u9009 '+n+' \u6837';
+  document.getElementById('hcount-my').textContent=n+' မျိုး ရွေးထား';
+  const ozh=document.getElementById('otext-zh');
+  const omy=document.getElementById('otext-my');
+  if(!n){
+    ozh.innerHTML='<span class="empty">\u672a\u9009\u4efb\u4f55\u83dc\u54c1</span>';
+    omy.innerHTML='<span class="empty">\u1019\u101b\u103d\u1031\u1038\u101b\u101e\u1031\u1038\u1015\u102b</span>';
+    return;
+  }
+  const sorted=[...sel.entries()].sort((a,b)=>a[1]-b[1]);
+  const linesZh=sorted.map(([i,n])=>n+'. '+items[i].zh+' '+items[i].qty);
+  const linesMy=sorted.map(([i,n])=>n+'. '+items[i].my+' '+items[i].qty);
+  ozh.textContent=linesZh.join('\n');
+  omy.textContent=linesMy.join('\n');
+}
+
+function reset(){sel.clear();counter=0;renderCategories();}
+function selAll(){items.forEach(function(_,i){if(!sel.has(i)){counter++;sel.set(i,counter);}});renderCategories();}
+renderCategories();
 </script>
 </body>
 </html>
