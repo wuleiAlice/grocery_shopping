@@ -225,7 +225,8 @@ const items = [
   {zh:"豆卜",my:"ပဲပွ",qty:"1 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Tofu_spread.jpg/300px-Tofu_spread.jpg"},
   {zh:"罗马生菜",my:"ရောမဆာလတ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Romaine_lettuce.jpg/300px-Romaine_lettuce.jpg"},
   {zh:"老黄瓜",my:"ကြီးသောသခွားသီး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Cucumbers_on_white.jpg/300px-Cucumbers_on_white.jpg"},
-  {zh:"北京包菜",my:"ပေကျင်းဂေါ်ဖီထုပ်",qty:"500g",img:""}
+  {zh:"北京包菜",my:"ပေကျင်းဂေါ်ဖီထုပ်",qty:"500g",img:""},
+  {zh:"螺丝椒",my:"ကောက်ကြောင်းငရုတ်သီး",qty:"250g",img:""}
 ];
 
 const categories = [
@@ -235,7 +236,7 @@ const categories = [
   {zh:"🥕 根茎类",my:"အမြစ်နှင့်အတောင်အမျိုးအစား",indices:[1, 14, 22, 32, 47, 48, 50, 65, 71, 72, 76, 77]},
   {zh:"🫘 豆类",my:"ပဲအမျိုးအစား",indices:[3, 16, 18, 24, 41, 43, 74]},
   {zh:"🍆 瓜茄类",my:"သခွားသီးနှင့်ခရမ်းသီးအမျိုးအစား",indices:[6, 10, 40, 45, 49, 52, 56, 58, 73, 84]},
-  {zh:"🌶️ 椒类",my:"ငရုတ်သီးအမျိုးအစား",indices:[27, 33, 39, 46, 80]},
+  {zh:"🌶️ 椒类",my:"ငရုတ်သီးအမျိုးအစား",indices:[27, 33, 39, 46, 80, 86]},
   {zh:"🍅 番茄类",my:"ခရမ်းချဉ်သီးအမျိုးအစား",indices:[7, 12, 68]},
   {zh:"🍋 柑橘类",my:"သံပရာအမျိုးအစား",indices:[53, 54, 69]},
   {zh:"🟨 豆腐类",my:"ပဲပိစပ်အမျိုးအစား",indices:[13, 31, 57, 79, 82]},
@@ -328,7 +329,8 @@ const svgs = {
   "同欧": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 82 Q32 68 30 52 Q28 36 40 26 Q50 18 60 26 Q72 36 70 52 Q68 68 50 82Z" fill="#4a9a2a"/><path d="M50 82 Q50 52 50 20" stroke="#2a7a0a" stroke-width="2" fill="none"/><path d="M34 48 Q50 44 66 48" stroke="#2a7a0a" stroke-width="1.5" fill="none"/><path d="M33 60 Q50 56 67 60" stroke="#2a7a0a" stroke-width="1.5" fill="none"/></svg>`,
   "豆卜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect x="22" y="28" width="24" height="24" rx="4" fill="#e8d090"/><rect x="54" y="28" width="24" height="24" rx="4" fill="#d8c080"/><rect x="22" y="58" width="24" height="24" rx="4" fill="#d8c080"/><rect x="54" y="58" width="24" height="24" rx="4" fill="#e8d090"/></svg>`,
   "罗马生菜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 82 Q38 68 36 52 Q34 36 42 26 Q50 18 58 26 Q66 36 64 52 Q62 68 50 82Z" fill="#5aaa2a"/><path d="M50 82 Q50 52 50 20" stroke="#3a8a0a" stroke-width="3" fill="none"/><path d="M36 46 Q50 42 64 46" stroke="#3a8a0a" stroke-width="2" fill="none"/><path d="M35 58 Q50 54 65 58" stroke="#3a8a0a" stroke-width="2" fill="none"/><path d="M36 68 Q50 64 64 68" stroke="#3a8a0a" stroke-width="2" fill="none"/></svg>`,
-  "北京包菜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="55" r="30" fill="#90c840"/><circle cx="50" cy="52" r="25" fill="#a8d850"/><circle cx="50" cy="50" r="18" fill="#b8e060"/><circle cx="50" cy="50" r="10" fill="#c8e870"/><circle cx="50" cy="50" r="5" fill="#d8f080"/></svg>`,
+  "螺丝椒": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50 78 Q38 65 36 50 Q34 35 42 26 Q50 18 58 26 Q66 35 64 50 Q62 65 50 78Z" fill="#3a9a20"/><path d="M50 78 Q52 60 54 45 Q56 32 54 22" stroke="#2a7a10" stroke-width="2" fill="none"/><path d="M50 26 Q50 18 52 12" stroke="#2d5a27" stroke-width="4" fill="none" stroke-linecap="round"/></svg>`,
+"北京包菜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="55" r="30" fill="#90c840"/><circle cx="50" cy="52" r="25" fill="#a8d850"/><circle cx="50" cy="50" r="18" fill="#b8e060"/><circle cx="50" cy="50" r="10" fill="#c8e870"/><circle cx="50" cy="50" r="5" fill="#d8f080"/></svg>`,
 "老黄瓜": `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="55" rx="18" ry="30" fill="#c8a040"/><ellipse cx="50" cy="53" rx="16" ry="28" fill="#d4ac50"/><line x1="34" y1="42" x2="66" y2="38" stroke="#a88030" stroke-width="1.5"/><line x1="33" y1="52" x2="67" y2="48" stroke="#a88030" stroke-width="1.5"/><line x1="33" y1="62" x2="67" y2="58" stroke="#a88030" stroke-width="1.5"/><line x1="34" y1="72" x2="66" y2="68" stroke="#a88030" stroke-width="1.5"/><path d="M50 25 Q50 18 52 13" stroke="#2d5a27" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`,
 };
 
