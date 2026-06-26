@@ -48,6 +48,9 @@ header{background:#2d6a4f;color:white;padding:14px 20px;position:sticky;top:0;z-
 .cat-title-my{font-size:11px;color:#5a8a6a;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif}
 .cat-count{font-size:11px;color:#aaa;margin-left:auto}
 .cat-toggle{font-size:12px;color:#aaa;transition:transform 0.2s}
+.qty-bar{display:none;align-items:center;justify-content:center;gap:6px;padding:4px 0;background:#eef7f2;border-bottom:1px solid #d0eada}
+.qty-btn{background:#2d6a4f;color:white;border:none;border-radius:6px;width:26px;height:26px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1}
+.qty-label{font-size:13px;font-weight:700;color:#2d6a4f;min-width:28px;text-align:center}
 .cat-header.collapsed .cat-toggle{transform:rotate(-90deg)}
 .cat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding-bottom:8px}
 .cat-grid.hidden{display:none}
@@ -340,6 +343,10 @@ function renderCategories(){
       const tick=document.createElement('div');
       tick.className='tick';
       tick.textContent=order;
+      const qtyBar=document.createElement('div');
+      qtyBar.className='qty-bar';
+      qtyBar.style.display=sel.has(i)?'flex':'none';
+      qtyBar.innerHTML='<button class="qty-btn" onclick="changeQty('+i+',-1,event)">－</button><span class="qty-label">x'+(sel.has(i)?sel.get(i).qty:1)+'</span><button class="qty-btn" onclick="changeQty('+i+',1,event)">＋</button>';
       const imgWrap=document.createElement('div');
       imgWrap.className='csvg';
       imgWrap.id='csvg-'+i;
@@ -353,6 +360,7 @@ function renderCategories(){
       info.className='cinfo';
       info.innerHTML='<div class="czh">'+item.zh+'</div><div class="cmy">'+item.my+'</div><div class="cqty">'+item.qty+'</div>';
       c.appendChild(tick);
+      c.appendChild(qtyBar);
       c.appendChild(imgWrap);
       c.appendChild(info);
       c.onclick=function(){toggle(i);};
@@ -375,24 +383,55 @@ function updateCatCounts(){
 
 function toggle(i){
   if(sel.has(i)){
-    sel.delete(i);
-    const sorted=[...sel.entries()].sort((a,b)=>a[1]-b[1]);
-    counter=0;sel.clear();
-    sorted.forEach(([idx])=>{counter++;sel.set(idx,counter);});
-    items.forEach(function(_,idx){
-      const c=document.getElementById('card-'+idx);
-      if(!c) return;
-      if(sel.has(idx)){c.classList.add('sel');c.querySelector('.tick').textContent=sel.get(idx);}
-      else{c.classList.remove('sel');c.querySelector('.tick').textContent='';}
-    });
+    // already selected - do nothing, use +/- buttons
   } else {
     counter++;
-    sel.set(i,counter);
+    sel.set(i,{order:counter,qty:1});
     const c=document.getElementById('card-'+i);
-    if(c){c.classList.add('sel');c.querySelector('.tick').textContent=counter;}
+    if(c){c.classList.add('sel');refreshCardQty(i);}
   }
   update();
   updateCatCounts();
+}
+
+function changeQty(i, delta, event){
+  event.stopPropagation();
+  if(!sel.has(i)) return;
+  const entry=sel.get(i);
+  const newQty=entry.qty+delta;
+  if(newQty<=0){
+    // deselect
+    sel.delete(i);
+    // renumber
+    const sorted=[...sel.entries()].sort((a,b)=>a[1].order-b[1].order);
+    counter=0; sel.clear();
+    sorted.forEach(([idx,e])=>{counter++;sel.set(idx,{order:counter,qty:e.qty});});
+    items.forEach(function(_,idx){
+      const c=document.getElementById('card-'+idx);
+      if(!c) return;
+      if(sel.has(idx)){c.classList.add('sel');refreshCardQty(idx);}
+      else{c.classList.remove('sel');const qb=c.querySelector('.qty-bar');if(qb)qb.style.display='none';}
+    });
+  } else {
+    entry.qty=newQty;
+    refreshCardQty(i);
+  }
+  update();
+  updateCatCounts();
+}
+
+function refreshCardQty(i){
+  const c=document.getElementById('card-'+i);
+  if(!c) return;
+  const entry=sel.get(i);
+  const tick=c.querySelector('.tick');
+  if(tick) tick.textContent=entry?entry.order:'';
+  const qb=c.querySelector('.qty-bar');
+  if(qb){
+    qb.style.display=entry?'flex':'none';
+    const ql=qb.querySelector('.qty-label');
+    if(ql) ql.textContent='x'+entry.qty;
+  }
 }
 
 function update(){
@@ -406,15 +445,15 @@ function update(){
     omy.innerHTML='<span class="empty">\u1019\u101b\u103d\u1031\u1038\u101b\u101e\u1031\u1038\u1015\u102b</span>';
     return;
   }
-  const sorted=[...sel.entries()].sort((a,b)=>a[1]-b[1]);
-  const linesZh=sorted.map(([i,n])=>n+'. '+items[i].zh+' '+items[i].qty);
-  const linesMy=sorted.map(([i,n])=>n+'. '+items[i].my+' '+items[i].qty);
+  const sorted=[...sel.entries()].sort((a,b)=>a[1].order-b[1].order);
+  const linesZh=sorted.map(([i,e])=>e.order+'. '+items[i].zh+' '+items[i].qty+(e.qty>1?' x'+e.qty:''));
+  const linesMy=sorted.map(([i,e])=>e.order+'. '+items[i].my+' '+items[i].qty+(e.qty>1?' x'+e.qty:''));
   ozh.textContent=linesZh.join('\n');
   omy.textContent=linesMy.join('\n');
 }
 
 function reset(){sel.clear();counter=0;renderCategories();}
-function selAll(){items.forEach(function(_,i){if(!sel.has(i)){counter++;sel.set(i,counter);}});renderCategories();}
+function selAll(){items.forEach(function(_,i){if(!sel.has(i)){counter++;sel.set(i,{order:counter,qty:1});}});renderCategories();}
 renderCategories();
 </script>
 </body>
