@@ -404,7 +404,13 @@ function renderCategories(){
       const order=sel.has(i)?sel.get(i):'';
       const svgKey=item.zh.replace(/\uff08.*?\uff09/g,'').replace(/[\uff08\uff09()\s]/g,'');
       const svgHtml=svgs[item.zh]||svgs[svgKey]||'<svg viewBox="0 0 100 100"><text x="50" y="60" text-anchor="middle" font-size="40">\ud83e\udd6c</text></svg>';
-      const imgSrc='imgs/'+String(i+1).padStart(2,'0')+'_'+item.zh.replace(/[（（(][^））)]*[））)]/g,'').replace(/[\s]/g,'')+'.png';
+      const fileNameMap={
+  '苋菜（大尖）':'苋菜',
+  '樱桃番茄（红）':'樱桃番茄红',
+  '樱桃番茄（黄）':'樱桃番茄黄',
+};
+const baseName=fileNameMap[item.zh]||item.zh.replace(/[（）（）()\s]/g,'');
+const imgSrc='imgs/'+String(i+1).padStart(2,'0')+'_'+baseName+'.png';
       const tick=document.createElement('div');
       tick.className='tick';
       tick.textContent=order;
