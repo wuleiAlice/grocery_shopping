@@ -344,7 +344,7 @@ function renderCategories(){
       imgWrap.className='csvg';
       imgWrap.id='csvg-'+i;
       const img=document.createElement('img');
-      img.style.cssText='width:100%;height:100%;object-fit:cover;display:block';
+      img.style.cssText='width:100%;height:100%;object-fit:contain;display:block;padding:4px;background:#f8f8f4';
       img.src=imgSrc;
       img.alt=item.zh;
       img.onerror=function(){imgWrap.innerHTML=svgHtml;};
