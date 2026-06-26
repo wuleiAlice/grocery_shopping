@@ -50,7 +50,7 @@ header{background:#2d6a4f;color:white;padding:14px 20px;position:sticky;top:0;z-
 .cat-nav-btn.active .cat-nav-btn-zh{color:#2d6a4f}.cat-nav-btn.active .cat-nav-btn-my{color:#2d6a4f}.cat-nav-btn.active{border-bottom-color:#2d6a4f}
 .main-layout{display:flex;align-items:flex-start;gap:0}
 .left-panel{flex:1;min-width:0;padding-bottom:80px}
-.right-panel{width:320px;flex-shrink:0;position:sticky;top:44px;height:calc(100vh - 44px - 72px);display:flex;flex-direction:column;border-left:1px solid #dde8dd;background:white}
+.right-panel{width:320px;flex-shrink:0;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;border-left:1px solid #dde8dd;background:white}
 @media(max-width:768px){
 .main-layout{flex-direction:column}.right-panel{width:100%;position:static;height:auto;border-left:none;border-top:2px solid #dde8dd}}
 .cart-header{padding:14px 16px 10px;border-bottom:1px solid #eee}
@@ -111,10 +111,10 @@ header{background:#2d6a4f;color:white;padding:14px 20px;position:sticky;top:0;z-
   </div>
 </header>
 
-<div style="flex:1;overflow-y:auto;display:flex;flex-direction:column" id="scroll-container"><div class="cat-nav" id="cat-nav">
+<div class="cat-nav" id="cat-nav">
   <div class="cat-nav-inner" id="cat-nav-inner"></div>
 </div>
-<div class="main-layout">
+<div style="flex:1;overflow-y:auto" id="scroll-container"><div class="main-layout">
   <div class="left-panel">
     <div id="categories"></div>
   </div>
@@ -136,7 +136,7 @@ header{background:#2d6a4f;color:white;padding:14px 20px;position:sticky;top:0;z-
 </div>
 
 </div>
-</div>
+</div></div>
 
 <div class="toast" id="toast">
   ✅ 已复制！可直接发给 Vendor<br>
@@ -546,6 +546,16 @@ function update(){
 }
 
 function reset(){sel.clear();counter=0;renderCategories();
+function fixRightPanel(){
+  const nav=document.getElementById('cat-nav');
+  const rp=document.querySelector('.right-panel');
+  if(!nav||!rp) return;
+  const navH=nav.offsetHeight;
+  rp.style.top=navH+'px';
+  rp.style.height='calc(100vh - '+navH+'px)';
+}
+fixRightPanel();
+window.addEventListener('resize', fixRightPanel);
 
 // dynamically set sticky positions based on actual header height
 }
