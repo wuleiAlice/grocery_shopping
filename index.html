@@ -29,10 +29,10 @@ header{background:#2d6a4f;color:white;padding:14px 20px;position:sticky;top:0;z-
 .tick{display:none !important}
 .csvg{width:100%;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;background:#f8f8f4;padding:8px}
 .csvg svg{width:100%;height:100%}
-.cinfo{padding:8px 10px 11px}
-.czh{font-size:15px;font-weight:700;color:#1a1a1a;line-height:1.3;margin-bottom:3px}
-.cmy{font-size:13px;color:#3a7a5a;line-height:1.5;margin-bottom:4px;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif}
-.cqty{font-size:12px;color:#999;line-height:1.3}
+.cinfo{padding:7px 9px 9px}
+.czh{font-size:14px;font-weight:700;color:#1a1a1a;line-height:1.3;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cmy{font-size:11px;color:#3a7a5a;line-height:1.4;margin-bottom:3px;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cqty{font-size:11px;color:#bbb;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .output-wrap{max-width:900px;margin:0 auto;padding:0 16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:600px){.output-wrap{grid-template-columns:1fr}}
 .output{background:white;border-radius:12px;padding:14px 16px;box-shadow:0 1px 3px rgba(0,0,0,0.06)}
 
@@ -49,9 +49,8 @@ header{background:#2d6a4f;color:white;padding:14px 20px;position:sticky;top:0;z-
 .cat-nav-btn.active .cat-nav-btn-zh{color:#2d6a4f}.cat-nav-btn.active .cat-nav-btn-my{color:#2d6a4f}.cat-nav-btn.active{border-bottom-color:#2d6a4f}
 .main-layout{display:flex;align-items:flex-start;gap:0}
 .left-panel{flex:1;min-width:0;padding-bottom:80px}
-.right-panel{width:240px;flex-shrink:0;display:flex;flex-direction:column;border-left:1px solid #dde8dd;background:white;height:100%}
-@media(max-width:768px){
-.main-layout{flex-direction:column}.right-panel{width:100%;position:static;height:auto;border-left:none;border-top:2px solid #dde8dd}}
+.right-panel{width:300px;flex-shrink:0;display:flex;flex-direction:column;border-left:1px solid #dde8dd;background:white;height:100%}
+@media(max-width:768px){.main-layout{flex-direction:column}.right-panel{position:fixed!important;bottom:0;left:0;right:0;width:100%!important;height:72vh;z-index:150;border-radius:16px 16px 0 0;box-shadow:0 -4px 24px rgba(0,0,0,0.2);border-left:none;border-top:none;display:none!important}.right-panel.mobile-open{display:flex!important}.cart-drag-handle{display:block}.mobile-bar{display:flex!important}#left-scroll{padding-bottom:72px}}
 .cart-header{padding:14px 16px 10px;border-bottom:1px solid #eee}
 .cart-title-zh{font-size:16px;font-weight:700;color:#1a1a1a}
 .cart-title-my{font-size:12px;color:#5a8a6a;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif;display:block;margin-top:2px}
@@ -60,15 +59,15 @@ header{background:#2d6a4f;color:white;padding:14px 20px;position:sticky;top:0;z-
 .cart-cat-header{padding:6px 14px;background:#f0f7f3;border-top:2px solid #2d6a4f;border-bottom:1px solid #d0ead8;display:flex;align-items:center;gap:6px}
 .cart-cat-title{font-size:13px;font-weight:700;color:#2d6a4f}
 .cart-cat-count{font-size:11px;color:#5a8a6a;background:#d0ead8;padding:1px 7px;border-radius:8px}
-.cart-item{display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid #eef5ee;gap:4px}
-.cart-item-num{font-size:13px;font-weight:700;color:#888;min-width:18px;text-align:right}
-.cart-item-info{flex:1;min-width:0;margin-right:4px}
-.cart-item-zh{font-size:15px;font-weight:700;color:#1a1a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cart-item-my{font-size:12px;color:#5a8a6a;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
-.cart-item-qty{font-size:12px;color:#aaa;font-weight:400}
-.cart-item-xqty{display:inline-block;background:#2d6a4f;color:white;font-size:13px;font-weight:700;padding:2px 8px;border-radius:10px;margin-left:6px}
-.cart-item-badge{display:flex;align-items:center;justify-content:center;background:#f0faf4;border:1.5px solid #2d6a4f;border-radius:8px;padding:3px 8px;min-width:32px;flex-shrink:0}
-.cart-item-badge-qty{font-size:18px;font-weight:800;color:#2d6a4f;line-height:1}
+.cart-item{display:flex;align-items:center;padding:9px 14px;border-bottom:1px solid #eef5ee;gap:8px}
+.cart-item-num{font-size:12px;font-weight:700;color:#ccc;min-width:16px;text-align:right;flex-shrink:0}
+.cart-item-info{flex:1;min-width:0}
+.cart-item-zh{font-size:14px;font-weight:700;color:#1a1a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cart-item-my{font-size:11px;color:#5a8a6a;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
+.cart-item-qtyline{font-size:11px;color:#bbb;margin-top:2px}
+.cart-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
+.cart-right-mult{background:#2d6a4f;color:white;font-size:15px;font-weight:800;padding:3px 10px;border-radius:10px;min-width:36px;text-align:center;line-height:1.4}
+.cart-right-price{font-size:13px;font-weight:700;color:#1a1a1a;white-space:nowrap;text-align:right}
 
 .cart-footer{padding:10px 14px;border-top:1px solid #eee;flex-shrink:0}
 .cat-section{max-width:100%;margin:0;padding:0 12px}
@@ -90,6 +89,47 @@ header{background:#2d6a4f;color:white;padding:14px 20px;position:sticky;top:0;z-
 .btn-copy-footer .btn-my{font-size:12px;opacity:0.85;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif}
 .toast{display:none;position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#2d6a4f;color:white;padding:11px 24px;border-radius:20px;font-size:13px;z-index:999;box-shadow:0 4px 14px rgba(0,0,0,0.2);white-space:nowrap;text-align:center;line-height:1.6}
 .toast-my{font-size:11px;opacity:0.85;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif}
+.cprice-bar{background:#eef7f2;border-top:1px solid #d0ead8;border-bottom:1px solid #d0ead8;padding:5px 9px;font-size:12px;font-weight:700;color:#2d6a4f;text-align:center;display:none}
+.card.sel .cprice-bar{background:#e2f0e8}
+.cart-total-row{display:flex;align-items:center;justify-content:space-between;padding:5px 14px}
+.cart-total-label{font-size:13px;font-weight:600;color:#555;line-height:1.3}
+.cart-total-my{font-size:10px;color:#aaa;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif;font-weight:400;margin-top:1px}
+.cart-total-amt{font-size:14px;font-weight:700;color:#1a1a1a;white-space:nowrap}
+.cart-total-missing{font-size:11px;color:#bbb;text-align:center;padding:6px 14px 2px}
+.price-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:200;overflow-y:auto;padding:16px}
+.price-panel{background:white;max-width:480px;margin:0 auto;border-radius:16px;overflow:hidden}
+.price-panel-hdr{background:#2d6a4f;color:white;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
+.price-panel-hdr-close{background:rgba(255,255,255,0.2);border:1.5px solid rgba(255,255,255,0.5);color:white;border-radius:8px;padding:6px 14px;cursor:pointer;font-size:14px;font-weight:700;font-family:inherit}
+.price-panel-export{width:100%;background:#eef7f2;border:none;border-top:1px solid #d0ead8;padding:12px;font-family:inherit;font-size:13px;color:#2d6a4f;font-weight:700;cursor:pointer}
+.price-row{display:flex;align-items:center;padding:9px 16px;border-bottom:1px solid #f0f5f0;gap:8px}
+.price-row-info{flex:1;min-width:0}
+.price-row-zh{font-size:13px;font-weight:700;color:#1a1a1a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.price-row-qty{font-size:11px;color:#bbb}
+.price-input{width:68px;border:1.5px solid #d0ead8;border-radius:8px;padding:5px 7px;font-size:14px;font-family:inherit;outline:none}
+.price-input:focus{border-color:#2d6a4f}
+.price-unit-sel{border:1.5px solid #d0ead8;border-radius:8px;padding:5px 4px;font-size:12px;font-family:inherit;background:white;outline:none;cursor:pointer}
+.price-cat-hdr{padding:7px 16px;background:#f0f7f3;font-weight:700;color:#2d6a4f;font-size:13px;border-top:2px solid #2d6a4f;border-bottom:1px solid #d0ead8}
+
+.search-wrap{background:white;border-bottom:1px solid #e8f0e8;padding:10px 12px 8px;flex-shrink:0}
+.search-row{display:flex;align-items:center;gap:8px}
+.search-input{flex:1;border:1.5px solid #d0ead8;border-radius:10px;padding:8px 12px;font-size:14px;font-family:inherit;outline:none;background:#f8faf8;min-width:0}
+.search-input:focus{border-color:#2d6a4f;background:white}
+.search-input::placeholder{color:#bbb}
+.grid-toggle{border:1.5px solid #d0ead8;border-radius:10px;padding:7px 10px;background:white;cursor:pointer;font-size:12px;font-weight:700;color:#2d6a4f;font-family:inherit;white-space:nowrap;flex-shrink:0}
+.grid-toggle:hover{background:#eef7f2;border-color:#2d6a4f}
+.no-results{text-align:center;padding:40px 16px;color:#bbb;font-size:14px;display:none;flex-shrink:0}
+.cat-nav-btn-wrap{position:relative;display:inline-flex;align-items:center}
+.cat-nav-badge{position:absolute;top:-5px;right:-10px;background:#e85d04;color:white;font-size:9px;font-weight:800;min-width:15px;height:15px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 3px;line-height:1}
+.cat-grid.cols3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:600px){.cat-grid.cols3{grid-template-columns:repeat(2,1fr)}}
+.mobile-bar{display:none;position:fixed;bottom:0;left:0;right:0;z-index:150;background:#2d6a4f;color:white;padding:10px 16px;align-items:center;gap:12px;box-shadow:0 -2px 12px rgba(0,0,0,0.18)}
+.mobile-bar-info{flex:1;min-width:0}
+.mobile-bar-count{font-size:15px;font-weight:700}
+.mobile-bar-total{font-size:12px;opacity:0.85;margin-top:1px;font-family:"Noto Sans Myanmar","Pyidaungsu",sans-serif}
+.mobile-bar-open{background:rgba(255,255,255,0.18);border:1.5px solid rgba(255,255,255,0.4);color:white;border-radius:10px;padding:7px 12px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.mobile-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);z-index:140}
+.mobile-overlay.active{display:block}
+.cart-drag-handle{display:none;width:36px;height:4px;background:#ddd;border-radius:2px;margin:8px auto 2px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -103,6 +143,10 @@ header{background:#2d6a4f;color:white;padding:14px 20px;position:sticky;top:0;z-
       <span class="hcount-zh" id="hcount-zh">已选 0 样</span>
       <span class="hcount-my" id="hcount-my">၀ မျိုး ရွေးထား</span>
     </div>
+    <button onclick="openPricePanel()" style="background:rgba(255,255,255,0.2);border:1.5px solid rgba(255,255,255,0.5);color:white;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:2px">
+      <span style="font-size:15px;font-weight:700">💰 价格 <span id="price-progress" style="font-size:10px;background:rgba(255,255,255,0.25);padding:1px 5px;border-radius:6px;font-weight:600;vertical-align:middle;letter-spacing:0"></span></span>
+      <span style="font-size:12px;opacity:0.85;font-family:'Noto Sans Myanmar','Pyidaungsu',sans-serif">စျေးနှုန်း</span>
+    </button>
     <button onclick="reset()" style="background:rgba(255,255,255,0.2);border:1.5px solid rgba(255,255,255,0.5);color:white;border-radius:8px;padding:8px 16px;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;align-items:center;gap:2px">
       <span style="font-size:15px;font-weight:700">清空</span>
       <span style="font-size:12px;opacity:0.85;font-family:'Noto Sans Myanmar','Pyidaungsu',sans-serif">ဖျက်မည်</span>
@@ -114,10 +158,13 @@ header{background:#2d6a4f;color:white;padding:14px 20px;position:sticky;top:0;z-
   <div class="cat-nav-inner" id="cat-nav-inner"></div>
 </div>
 <div style="flex:1;display:flex;overflow:hidden" id="scroll-container">
-  <div style="flex:1;overflow-y:auto">
-    <div id="categories"></div>
+  <div style="flex:1;overflow-y:auto;display:flex;flex-direction:column" id="left-scroll">
+    <div class="search-wrap"><div class="search-row"><input class="search-input" id="search-input" type="text" placeholder="🔍 搜索菜品 / အင်းသီးယင်းရှာမည်" oninput="filterItems(this.value)"><button class="grid-toggle" id="grid-toggle" onclick="toggleGrid()">⊞ 3列</button></div></div>
+    <div id="categories" style="flex:1"></div>
+    <div class="no-results" id="no-results">没有找到相关菜品<br><small style="font-family:'Noto Sans Myanmar',sans-serif">ကိုကည်ညိသောဟင်းသီးယင်းရှေယ်မတြေ့ပါ</small></div>
   </div>
   <div class="right-panel">
+    <div class="cart-drag-handle" onclick="closeMobileCart()"></div>
     <div class="cart-header">
       <span class="cart-title-zh">🛒 已选购物车</span>
       <span class="cart-title-my">ရွေးထားသောစာရင်း</span>
@@ -126,11 +173,26 @@ header{background:#2d6a4f;color:white;padding:14px 20px;position:sticky;top:0;z-
       <div class="cart-empty" id="cart-empty">未选任何菜品<br><small>မရွေးရသေးပါ</small></div>
     </div>
     <div class="cart-footer">
+      <div id="cart-total-area"></div>
       <button class="btn-copy-footer" onclick="copy()">
         <span class="btn-zh">📋 复制给供货商</span>
         <span class="btn-my">စာရင်းကူးယူမည်</span>
       </button>
     </div>
+  </div>
+</div>
+
+<div class="price-overlay" id="price-overlay" onclick="if(event.target===this)closePricePanel()">
+  <div class="price-panel">
+    <div class="price-panel-hdr">
+      <div>
+        <div style="font-size:17px;font-weight:700">💰 价格配置</div>
+        <div style="font-size:12px;opacity:0.8;margin-top:2px">按发票逐一录入 · စျေးနှုန်းသတ်မှတ်မည်</div>
+      </div>
+      <button class="price-panel-hdr-close" onclick="closePricePanel()">关闭</button>
+    </div>
+    <div id="price-list" style="max-height:75vh;overflow-y:auto"></div>
+    <button class="price-panel-export" onclick="exportPrices()">📋 复制价格配置（发给 Claude 保存）</button>
   </div>
 </div>
 
@@ -140,109 +202,108 @@ header{background:#2d6a4f;color:white;padding:14px 20px;position:sticky;top:0;z-
 </div>
 <script>
 const items = [
-  {zh:"大饼菇",my:"ပေါ်တိုဘယ်လိုမှို",qty:"1 box",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Portobello_mushroom.jpg/300px-Portobello_mushroom.jpg"},
-  {zh:"甜菜根",my:"ချိုသောဥမြစ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Rote_Beete.jpg/300px-Rote_Beete.jpg"},
-  {zh:"苋菜（大尖）",my:"ဟင်းနုနွယ်ရွက်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Amaranth_sp_2.jpg/300px-Amaranth_sp_2.jpg"},
-  {zh:"四方豆",my:"လေးထောင့်ပဲ",qty:"300g（只要300g就够）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Psophocarpus_tetragonolobus_fruits.jpg/300px-Psophocarpus_tetragonolobus_fruits.jpg"},
-  {zh:"韭黄",my:"အဝါရောင်ကြက်သွန်မြိတ်",qty:"200g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Garlic_Chives_2.jpg/300px-Garlic_Chives_2.jpg"},
-  {zh:"大黄豆芽",my:"ပဲပုပ်အပွင့်",qty:"500g（不要1kg）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Soybean_sprouts_01.jpg/300px-Soybean_sprouts_01.jpg"},
-  {zh:"马来西亚金瓜",my:"မလေးရှားဖရုံသီး",qty:"1pcs（最小粒）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/FruitePotiron.jpg/300px-FruitePotiron.jpg"},
-  {zh:"樱桃番茄（红）",my:"ချယ်ရီခရမ်း（နီ）",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Tomato_je.jpg/300px-Tomato_je.jpg"},
-  {zh:"韭菜",my:"ကြက်သွန်မြိတ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Garlic_Chives_2.jpg/300px-Garlic_Chives_2.jpg"},
-  {zh:"白蘑菇",my:"အဖြူမှို",qty:"1 box（最小盒150g）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Agaricus_bisporus%2C_white_button_mushrooms.jpg/300px-Agaricus_bisporus%2C_white_button_mushrooms.jpg"},
-  {zh:"茄子",my:"ခရမ်းသီး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Solanum_melongena_0.1.jpg/300px-Solanum_melongena_0.1.jpg"},
-  {zh:"红苋菜",my:"နီသောဟင်းနုနွယ်",qty:"500g（缺货给圆苋菜，都没有就算了）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Amaranthus_cruentus_flowering.jpg/300px-Amaranthus_cruentus_flowering.jpg"},
-  {zh:"樱桃番茄（黄）",my:"ချယ်ရီခရမ်း（အဝါ）",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/Yellow_cherry_tomatoes.jpg/300px-Yellow_cherry_tomatoes.jpg"},
-  {zh:"百叶豆腐",my:"ပဲပြားပဲပိစပ်",qty:"1 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Tofu_spread.jpg/300px-Tofu_spread.jpg"},
-  {zh:"山药",my:"တောင်ဥ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Yam_on_white.jpg/300px-Yam_on_white.jpg"},
-  {zh:"老鼠粉",my:"ကြွက်ဆန်ခေါက်ဆွဲ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Rice-vermicelli.jpg/300px-Rice-vermicelli.jpg"},
-  {zh:"荷兰豆",my:"နယ်သာလန်ပဲ",qty:"2 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Snap_peas.jpg/300px-Snap_peas.jpg"},
-  {zh:"美国芦笋",my:"အမေရိကန်မြက်ဦး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Asparagus_officinalis_0.02.jpg/300px-Asparagus_officinalis_0.02.jpg"},
-  {zh:"长豆",my:"ရှည်သောပဲ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Yard_long_bean_edit.jpg/300px-Yard_long_bean_edit.jpg"},
-  {zh:"小豆苗",my:"ပဲပင်ငယ်",qty:"2 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Pea_shoots.jpg/300px-Pea_shoots.jpg"},
-  {zh:"青生菜",my:"အစိမ်းဆာလတ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Iceberg_lettuce.jpg/300px-Iceberg_lettuce.jpg"},
-  {zh:"杏鲍菇",my:"ကင်ပွန်းမှို",qty:"2 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Pleurotus_eryngii_2.jpg/300px-Pleurotus_eryngii_2.jpg"},
-  {zh:"金马仑白萝卜",my:"ကာမရွန်မြင့်ကုန်းဖြူဥ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Daikon_Radish.jpg/300px-Daikon_Radish.jpg"},
-  {zh:"西洋菜",my:"ရေနှင်းဆီ",qty:"250g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Watercress_2.jpg/300px-Watercress_2.jpg"},
-  {zh:"扁豆",my:"ပြားသောပဲ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Flat_green_beans.jpg/300px-Flat_green_beans.jpg"},
-  {zh:"红包菜",my:"နီသောဂေါ်ဖီထုပ်",qty:"1pcs（最小的）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Chou_rouge_2.jpg/300px-Chou_rouge_2.jpg"},
-  {zh:"薄荷叶",my:"မိန့်ရွက်",qty:"100g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Spearmint_Mentha_spicata.jpg/300px-Spearmint_Mentha_spicata.jpg"},
-  {zh:"红灯笼椒",my:"နီသောငရုတ်ချိုသီး",qty:"300g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Pimentao.jpg/300px-Pimentao.jpg"},
-  {zh:"大白菜",my:"တရုတ်ဂေါ်ဖီ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Napa_cabbage.jpg/300px-Napa_cabbage.jpg"},
-  {zh:"金马仑包菜",my:"ကာမရွန်မြင့်ကုန်းဂေါ်ဖီ",qty:"1pcs",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Chou_cabus_rouge.jpg/300px-Chou_cabus_rouge.jpg"},
-  {zh:"圆苋菜",my:"ဝိုင်းသောဟင်းနုနွယ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Amaranth_sp_2.jpg/300px-Amaranth_sp_2.jpg"},
-  {zh:"豆干",my:"ပဲပြောင်းခြောက်",qty:"1 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Tofu_spread.jpg/300px-Tofu_spread.jpg"},
-  {zh:"马蹄",my:"ရေခြေထောက်",qty:"300g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Water_chestnut.jpg/300px-Water_chestnut.jpg"},
-  {zh:"黄灯笼椒",my:"အဝါငရုတ်ချိုသီး",qty:"300g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Yellow_bell_pepper.jpg/300px-Yellow_bell_pepper.jpg"},
-  {zh:"松菇",my:"မှိုမွှေး",qty:"2 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Tricholoma_matsutake_3.jpg/300px-Tricholoma_matsutake_3.jpg"},
-  {zh:"西生菜",my:"နုပ်နုပ်ဆာလတ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Iceberg_lettuce.jpg/300px-Iceberg_lettuce.jpg"},
-  {zh:"黄面",my:"ဝါသောခေါက်ဆွဲ（ဝိုင်း）",qty:"500g（圆）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Yellow_noodles.jpg/300px-Yellow_noodles.jpg"},
-  {zh:"西兰花",my:"ဂေါ်ဖီထုပ်စိမ်း",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Broccoli_and_cross_section_edit.jpg/300px-Broccoli_and_cross_section_edit.jpg"},
-  {zh:"红大葱",my:"ကြက်သွန်နီကြီး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Shallot.jpg/300px-Shallot.jpg"},
-  {zh:"紫天椒",my:"ခရမ်းရောင်ငရုတ်သီး",qty:"100g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Capsicum_annuum_-_Chili_pepper_variety_-_02.jpg/300px-Capsicum_annuum_-_Chili_pepper_variety_-_02.jpg"},
-  {zh:"日本毛瓜",my:"ဂျပန်သခွားသီး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Cucumbers_on_white.jpg/300px-Cucumbers_on_white.jpg"},
-  {zh:"四季豆",my:"လေးရာသီပဲ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/GreenBeans.jpg/300px-GreenBeans.jpg"},
-  {zh:"西芹",my:"ဆဲလ်လာရီ",qty:"1 bundle（最小的就够）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Celery_cross_section.jpg/300px-Celery_cross_section.jpg"},
-  {zh:"甜豆",my:"ချိုသောပဲ",qty:"2 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/6/60/Snap_peas.jpg/300px-Snap_peas.jpg"},
-  {zh:"白松菇",my:"အဖြူပျော့မှို",qty:"2 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Agaricus_bisporus%2C_white_button_mushrooms.jpg/300px-Agaricus_bisporus%2C_white_button_mushrooms.jpg"},
-  {zh:"珍珠茄子",my:"ပုလဲခရမ်းသီး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Solanum_melongena_0.1.jpg/300px-Solanum_melongena_0.1.jpg"},
-  {zh:"小青辣椒",my:"ငယ်သောအစိမ်းငရုတ်",qty:"100g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Thai_peppers.jpg/300px-Thai_peppers.jpg"},
-  {zh:"青萝卜",my:"အစိမ်းရောင်ဥ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Daikon_Radish.jpg/300px-Daikon_Radish.jpg"},
-  {zh:"玉米",my:"ပြောင်းဖူး",qty:"1 pair",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/Cornus_%28shelled%29.jpg/300px-Cornus_%28shelled%29.jpg"},
-  {zh:"小苦瓜",my:"ငယ်သောကြက်ဆူသီး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Bitter_melon.jpg/300px-Bitter_melon.jpg"},
-  {zh:"莴笋",my:"ဆာလတ်ကြမ်း",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Lactuca_sativa_Celtuce.jpg/300px-Lactuca_sativa_Celtuce.jpg"},
-  {zh:"鲍鱼菇",my:"ကမာမှို",qty:"2 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Oyster_mushrooms_%28Pleurotus_ostreatus%29.jpg/300px-Oyster_mushrooms_%28Pleurotus_ostreatus%29.jpg"},
-  {zh:"本地冬瓜",my:"ဒေသထွက်ဆောင်းဖရုံ",qty:"1pcs（1粒最小的，不要2粒）",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Winter-Melon-Wax-Gourd.jpg/300px-Winter-Melon-Wax-Gourd.jpg"},
-  {zh:"小酸柑",my:"ငယ်သောချဉ်သောသံပရာ",qty:"100g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Calamansi.jpg/300px-Calamansi.jpg"},
-  {zh:"黄柠檬",my:"အဝါသံပရာ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Lemon_-_whole_and_split.jpg/300px-Lemon_-_whole_and_split.jpg"},
-  {zh:"粗米粉",my:"ကြမ်းသောဆန်ခေါက်ဆွဲ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Rice-vermicelli.jpg/300px-Rice-vermicelli.jpg"},
-  {zh:"日本吊瓜",my:"ဂျပန်တင်းသခွား",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Cucumbers_on_white.jpg/300px-Cucumbers_on_white.jpg"},
-  {zh:"红盒豆腐",my:"နီပုံးပဲပိစပ်",qty:"1 box",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Tofu_spread.jpg/300px-Tofu_spread.jpg"},
-  {zh:"佛手瓜",my:"ဗုဒ္ဓလက်ဖရုံ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Chayote_-_single.jpg/300px-Chayote_-_single.jpg"},
-  {zh:"香港芥兰",my:"ဟောင်ကောင်မုန်ညင်း",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Kai-lan.jpg/300px-Kai-lan.jpg"},
-  {zh:"上海青",my:"ရှန်ဟိုင်းပဲပုပ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Bok_choy.jpg/300px-Bok_choy.jpg"},
-  {zh:"芫荽",my:"နံနံပင်",qty:"100g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/Coriander.jpg/300px-Coriander.jpg"},
-  {zh:"空心菜",my:"ရေဟင်းခတ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Water_spinach_1.jpg/300px-Water_spinach_1.jpg"},
-  {zh:"香菇",my:"မွှေးသောမှို",qty:"200g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Shiitakemushroom.jpg/300px-Shiitakemushroom.jpg"},
-  {zh:"奶白菜",my:"နို့ပဲပုပ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Bok_choy.jpg/300px-Bok_choy.jpg"},
-  {zh:"红萝卜",my:"မုန်လာဥနီ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Vegetable-Carrot-Bundle-wm.jpg/300px-Vegetable-Carrot-Bundle-wm.jpg"},
-  {zh:"香港菠菜",my:"ဟောင်ကောင်ဟင်းနုနွယ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Spinach_leaves.jpg/300px-Spinach_leaves.jpg"},
-  {zh:"香麦",my:"မွှေးဆာလတ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Lactuca_sativa_Celtuce.jpg/300px-Lactuca_sativa_Celtuce.jpg"},
-  {zh:"番茄",my:"ခရမ်းချဉ်သီး",qty:"500g x2",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Tomato_je.jpg/300px-Tomato_je.jpg"},
-  {zh:"青柠檬",my:"အစိမ်းသံပရာ",qty:"100g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Hapus_Mango.jpg/300px-Hapus_Mango.jpg"},
-  {zh:"龙凤苗",my:"နဂါးဖိနစ်ပင်ငယ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Pea_shoots.jpg/300px-Pea_shoots.jpg"},
-  {zh:"马铃薯",my:"အာလူး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Patates.jpg/300px-Patates.jpg"},
-  {zh:"老姜",my:"နနွင်းကြီး",qty:"200g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Ingwer.jpg/300px-Ingwer.jpg"},
-  {zh:"苦瓜",my:"ကြက်ဆူသီး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Bitter_melon.jpg/300px-Bitter_melon.jpg"},
-  {zh:"角豆",my:"ဒါလ်ပဲ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Yard_long_bean_edit.jpg/300px-Yard_long_bean_edit.jpg"},
-  {zh:"帝皇苗",my:"ဘုရင်ပင်ငယ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Pea_shoots.jpg/300px-Pea_shoots.jpg"},
-  {zh:"蜜糖番薯",my:"ပျားရည်မြည်းဥ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Ipomoea_batatas_006.jpg/300px-Ipomoea_batatas_006.jpg"},
-  {zh:"菜花",my:"ပန်းဂေါ်ဖီ",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Cauliflower_2.jpg/300px-Cauliflower_2.jpg"},
-  {zh:"粿条",my:"ကွေးကော်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Rice-vermicelli.jpg/300px-Rice-vermicelli.jpg"},
-  {zh:"蛋豆腐",my:"ဥပဲပိစပ်",qty:"2 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Tofu_spread.jpg/300px-Tofu_spread.jpg"},
-  {zh:"青灯笼椒",my:"အစိမ်းငရုတ်ချိုသီး",qty:"300g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Pimentao.jpg/300px-Pimentao.jpg"},
-  {zh:"同欧",my:"တုံအို",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Lactuca_sativa_Celtuce.jpg/300px-Lactuca_sativa_Celtuce.jpg"},
-  {zh:"豆卜",my:"ပဲပွ",qty:"1 pkt",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Tofu_spread.jpg/300px-Tofu_spread.jpg"},
-  {zh:"罗马生菜",my:"ရောမဆာလတ်",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Romaine_lettuce.jpg/300px-Romaine_lettuce.jpg"},
-  {zh:"老黄瓜",my:"ကြီးသောသခွားသီး",qty:"500g",img:"https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Cucumbers_on_white.jpg/300px-Cucumbers_on_white.jpg"},
-  {zh:"北京包菜",my:"ပေကျင်းဂေါ်ဖီထုပ်",qty:"500g",img:""},
-  {zh:"螺丝椒",my:"ကောက်ကြောင်းငရုတ်သီး",qty:"250g",img:""},
-  {zh:"松花菜",my:"ပန်းဂေါ်ဖီဖြူ",qty:"500g",img:""}
+  {zh:"大饼菇",my:"ပေါ်တိုဘယ်လိုမှို",qty:"1 box",img:"imgs/01_大饼菇.png",p:0,u:""},
+  {zh:"甜菜根",my:"ချိုသောဥမြစ်",qty:"500g",img:"imgs/02_甜菜根.png",p:0,u:"kg"},
+  {zh:"苋菜（大尖）",my:"ဟင်းနုနွယ်ရွက်",qty:"500g",img:"imgs/03_苋菜.png",p:0,u:"kg"},
+  {zh:"四方豆",my:"လေးထောင့်ပဲ",qty:"300g（只要300g就够）",img:"imgs/04_四方豆.png",p:0,u:"kg"},
+  {zh:"韭黄",my:"အဝါရောင်ကြက်သွန်မြိတ်",qty:"200g",img:"imgs/05_韭黄.png",p:0,u:"kg"},
+  {zh:"大黄豆芽",my:"ပဲပုပ်အပွင့်",qty:"500g（不要1kg）",img:"imgs/06_大黄豆芽.png",p:0,u:"kg"},
+  {zh:"马来西亚金瓜",my:"မလေးရှားဖရုံသီး",qty:"1pcs（最小粒）",img:"imgs/07_马来西亚金瓜.png",p:0,u:""},
+  {zh:"樱桃番茄（红）",my:"ချယ်ရီခရမ်း（နီ）",qty:"500g",img:"imgs/08_樱桃番茄红.png",p:0,u:"kg"},
+  {zh:"韭菜",my:"ကြက်သွန်မြိတ်",qty:"500g",img:"imgs/09_韭菜.png",p:0,u:"kg"},
+  {zh:"白蘑菇",my:"အဖြူမှို",qty:"1 box（最小盒150g）",img:"imgs/10_白蘑菇.png",p:0,u:"kg"},
+  {zh:"茄子",my:"ခရမ်းသီး",qty:"500g",img:"imgs/11_茄子.png",p:0,u:"kg"},
+  {zh:"红苋菜",my:"နီသောဟင်းနုနွယ်",qty:"500g（缺货给圆苋菜，都没有就算了）",img:"imgs/12_红苋菜.png",p:0,u:"kg"},
+  {zh:"樱桃番茄（黄）",my:"ချယ်ရီခရမ်း（အဝါ）",qty:"500g",img:"imgs/13_樱桃番茄黄.png",p:0,u:"kg"},
+  {zh:"百叶豆腐",my:"ပဲပြားပဲပိစပ်",qty:"1 pkt",img:"imgs/14_百叶豆腐.png",p:0,u:"pkt"},
+  {zh:"山药",my:"တောင်ဥ",qty:"500g",img:"imgs/15_山药.png",p:0,u:"kg"},
+  {zh:"老鼠粉",my:"ကြွက်ဆန်ခေါက်ဆွဲ",qty:"500g",img:"imgs/16_老鼠粉.png",p:0,u:"kg"},
+  {zh:"荷兰豆",my:"နယ်သာလန်ပဲ",qty:"2 pkt",img:"imgs/17_荷兰豆.png",p:0,u:"pkt"},
+  {zh:"美国芦笋",my:"အမေရိကန်မြက်ဦး",qty:"500g",img:"imgs/18_美国芦笋.png",p:0,u:"kg"},
+  {zh:"长豆",my:"ရှည်သောပဲ",qty:"500g",img:"imgs/19_长豆.png",p:0,u:"kg"},
+  {zh:"小豆苗",my:"ပဲပင်ငယ်",qty:"2 pkt",img:"imgs/20_小豆苗.png",p:0,u:"pkt"},
+  {zh:"青生菜",my:"အစိမ်းဆာလတ်",qty:"500g",img:"imgs/21_青生菜.png",p:0,u:"kg"},
+  {zh:"杏鲍菇",my:"ကင်ပွန်းမှို",qty:"2 pkt",img:"imgs/22_杏鲍菇.png",p:0,u:"pkt"},
+  {zh:"金马仑白萝卜",my:"ကာမရွန်မြင့်ကုန်းဖြူဥ",qty:"500g",img:"imgs/23_金马仑白萝卜.png",p:0,u:"kg"},
+  {zh:"西洋菜",my:"ရေနှင်းဆီ",qty:"250g",img:"imgs/24_西洋菜.png",p:0,u:"kg"},
+  {zh:"扁豆",my:"ပြားသောပဲ",qty:"500g",img:"imgs/25_扁豆.png",p:0,u:"kg"},
+  {zh:"红包菜",my:"နီသောဂေါ်ဖီထုပ်",qty:"1pcs（最小的）",img:"imgs/26_红包菜.png",p:0,u:""},
+  {zh:"薄荷叶",my:"မိန့်ရွက်",qty:"100g",img:"imgs/27_薄荷叶.png",p:0,u:"kg"},
+  {zh:"红灯笼椒",my:"နီသောငရုတ်ချိုသီး",qty:"300g",img:"imgs/28_红灯笼椒.png",p:0,u:"kg"},
+  {zh:"大白菜",my:"တရုတ်ဂေါ်ဖီ",qty:"500g",img:"imgs/29_大白菜.png",p:0,u:"kg"},
+  {zh:"金马仑包菜",my:"ကာမရွန်မြင့်ကုန်းဂေါ်ဖီ",qty:"1pcs",img:"imgs/30_金马仑包菜.png",p:0,u:""},
+  {zh:"圆苋菜",my:"ဝိုင်းသောဟင်းနုနွယ်",qty:"500g",img:"imgs/31_圆苋菜.png",p:0,u:"kg"},
+  {zh:"豆干",my:"ပဲပြောင်းခြောက်",qty:"1 pkt",img:"imgs/32_豆干.png",p:0,u:"pkt"},
+  {zh:"马蹄",my:"ရေခြေထောက်",qty:"300g",img:"imgs/33_马蹄.png",p:0,u:"kg"},
+  {zh:"黄灯笼椒",my:"အဝါငရုတ်ချိုသီး",qty:"300g",img:"imgs/34_黄灯笼椒.png",p:0,u:"kg"},
+  {zh:"松菇",my:"မှိုမွှေး",qty:"2 pkt",img:"imgs/35_松菇.png",p:0,u:"pkt"},
+  {zh:"西生菜",my:"နုပ်နုပ်ဆာလတ်",qty:"500g",img:"imgs/36_西生菜.png",p:0,u:"kg"},
+  {zh:"黄面",my:"ဝါသောခေါက်ဆွဲ（ဝိုင်း）",qty:"500g（圆）",img:"imgs/37_黄面.png",p:0,u:"kg"},
+  {zh:"西兰花",my:"ဂေါ်ဖီထုပ်စိမ်း",qty:"500g",img:"imgs/38_西兰花.png",p:0,u:"kg"},
+  {zh:"红大葱",my:"ကြက်သွန်နီကြီး",qty:"500g",img:"imgs/39_红大葱.png",p:0,u:"kg"},
+  {zh:"紫天椒",my:"ခရမ်းရောင်ငရုတ်သီး",qty:"100g",img:"imgs/40_紫天椒.png",p:0,u:"kg"},
+  {zh:"日本毛瓜",my:"ဂျပန်သခွားသီး",qty:"500g",img:"imgs/41_日本毛瓜.png",p:0,u:"kg"},
+  {zh:"四季豆",my:"လေးရာသီပဲ",qty:"500g",img:"imgs/42_四季豆.png",p:0,u:"kg"},
+  {zh:"西芹",my:"ဆဲလ်လာရီ",qty:"1 bundle（最小的就够）",img:"imgs/43_西芹.png",p:0,u:""},
+  {zh:"甜豆",my:"ချိုသောပဲ",qty:"2 pkt",img:"imgs/44_甜豆.png",p:0,u:"pkt"},
+  {zh:"白松菇",my:"အဖြူပျော့မှို",qty:"2 pkt",img:"imgs/45_白松菇.png",p:0,u:"pkt"},
+  {zh:"珍珠茄子",my:"ပုလဲခရမ်းသီး",qty:"500g",img:"imgs/46_珍珠茄子.png",p:0,u:"kg"},
+  {zh:"小青辣椒",my:"ငယ်သောအစိမ်းငရုတ်",qty:"100g",img:"imgs/47_小青辣椒.png",p:0,u:"kg"},
+  {zh:"青萝卜",my:"အစိမ်းရောင်ဥ",qty:"500g",img:"imgs/48_青萝卜.png",p:0,u:"kg"},
+  {zh:"玉米",my:"ပြောင်းဖူး",qty:"1 pair",img:"imgs/49_玉米.png",p:0,u:""},
+  {zh:"小苦瓜",my:"ငယ်သောကြက်ဆူသီး",qty:"500g",img:"imgs/50_小苦瓜.png",p:0,u:"kg"},
+  {zh:"莴笋",my:"ဆာလတ်ကြမ်း",qty:"500g",img:"imgs/51_莴笋.png",p:0,u:"kg"},
+  {zh:"鲍鱼菇",my:"ကမာမှို",qty:"2 pkt",img:"imgs/52_鲍鱼菇.png",p:0,u:"pkt"},
+  {zh:"本地冬瓜",my:"ဒေသထွက်ဆောင်းဖရုံ",qty:"1pcs（1粒最小的，不要2粒）",img:"imgs/53_本地冬瓜.png",p:0,u:""},
+  {zh:"小酸柑",my:"ငယ်သောချဉ်သောသံပရာ",qty:"100g",img:"imgs/54_小酸柑.png",p:3.6,u:"kg"},
+  {zh:"黄柠檬",my:"အဝါသံပရာ",qty:"500g",img:"imgs/55_黄柠檬.png",p:0,u:"kg"},
+  {zh:"粗米粉",my:"ကြမ်းသောဆန်ခေါက်ဆွဲ",qty:"500g",img:"imgs/56_粗米粉.png",p:0,u:"kg"},
+  {zh:"日本吊瓜",my:"ဂျပန်တင်းသခွား",qty:"500g",img:"imgs/57_日本吊瓜.png",p:2.8,u:"kg"},
+  {zh:"红盒豆腐",my:"နီပုံးပဲပိစပ်",qty:"1 box",img:"imgs/58_红盒豆腐.png",p:0.7,u:"pkt"},
+  {zh:"佛手瓜",my:"ဗုဒ္ဓလက်ဖရုံ",qty:"500g",img:"imgs/59_佛手瓜.png",p:2.5,u:"kg"},
+  {zh:"香港芥兰",my:"ဟောင်ကောင်မုန်ညင်း",qty:"500g",img:"imgs/60_香港芥兰.png",p:4.8,u:"kg"},
+  {zh:"上海青",my:"ရှန်ဟိုင်းပဲပုပ်",qty:"500g",img:"imgs/61_上海青.png",p:3.8,u:"kg"},
+  {zh:"芫荽",my:"နံနံပင်",qty:"100g",img:"imgs/62_芫荽.png",p:9.5,u:"kg"},
+  {zh:"空心菜",my:"ရေဟင်းခတ်",qty:"500g",img:"imgs/63_空心菜.png",p:2.6,u:"kg"},
+  {zh:"香菇",my:"မွှေးသောမှို",qty:"200g",img:"imgs/64_香菇.png",p:7.5,u:"kg"},
+  {zh:"奶白菜",my:"နို့ပဲပုပ်",qty:"500g",img:"imgs/65_奶白菜.png",p:6,u:"kg"},
+  {zh:"红萝卜",my:"မုန်လာဥနီ",qty:"500g",img:"imgs/66_红萝卜.png",p:1.5,u:"kg"},
+  {zh:"香港菠菜",my:"ဟောင်ကောင်ဟင်းနုနွယ်",qty:"500g",img:"imgs/67_香港菠菜.png",p:6,u:"kg"},
+  {zh:"香麦",my:"မွှေးဆာလတ်",qty:"500g",img:"imgs/68_香麦.png",p:4,u:"kg"},
+  {zh:"番茄",my:"ခရမ်းချဉ်သီး",qty:"500g",img:"imgs/69_番茄.png",p:3.6,u:"kg"},
+  {zh:"青柠檬",my:"အစိမ်းသံပရာ",qty:"100g",img:"imgs/70_青柠檬.png",p:0,u:"kg"},
+  {zh:"龙凤苗",my:"နဂါးဖိနစ်ပင်ငယ်",qty:"500g",img:"imgs/71_龙凤苗.png",p:3,u:"kg"},
+  {zh:"马铃薯",my:"အာလူး",qty:"500g",img:"imgs/72_马铃薯.png",p:1,u:"kg"},
+  {zh:"老姜",my:"နနွင်းကြီး",qty:"200g",img:"imgs/73_老姜.png",p:4,u:"kg"},
+  {zh:"苦瓜",my:"ကြက်ဆူသီး",qty:"500g",img:"imgs/74_苦瓜.png",p:4.5,u:"kg"},
+  {zh:"角豆",my:"ဒါလ်ပဲ",qty:"500g",img:"imgs/75_角豆.png",p:3.2,u:"kg"},
+  {zh:"帝皇苗",my:"ဘုရင်ပင်ငယ်",qty:"500g",img:"imgs/76_帝皇苗.png",p:3,u:"kg"},
+  {zh:"蜜糖番薯",my:"ပျားရည်မြည်းဥ",qty:"500g",img:"imgs/77_蜜糖番薯.png",p:4,u:"kg"},
+  {zh:"菜花",my:"ပန်းဂေါ်ဖီ",qty:"500g",img:"imgs/78_菜花.png",p:2.8,u:"kg"},
+  {zh:"粿条",my:"ကွေးကော်",qty:"500g",img:"imgs/79_粿条.png",p:1.8,u:"kg"},
+  {zh:"蛋豆腐",my:"ဥပဲပိစပ်",qty:"2 pkt",img:"imgs/80_蛋豆腐.png",p:0.35,u:"pkt"},
+  {zh:"青灯笼椒",my:"အစိမ်းငရုတ်ချိုသီး",qty:"300g",img:"imgs/81_青灯笼椒.png",p:4,u:"kg"},
+  {zh:"同欧",my:"တုံအို",qty:"500g",img:"imgs/82_同欧.png",p:9,u:"kg"},
+  {zh:"豆卜",my:"ပဲပွ",qty:"1 pkt",img:"imgs/83_豆卜.png",p:1.6,u:"pkt"},
+  {zh:"罗马生菜",my:"ရောမဆာလတ်",qty:"500g",img:"imgs/84_罗马生菜.png",p:4.5,u:"kg"},
+  {zh:"老黄瓜",my:"ကြီးသောသခွားသီး",qty:"500g",img:"imgs/85_老黄瓜.png",p:2.8,u:"kg"},
+  {zh:"北京包菜",my:"ပေကျင်းဂေါ်ဖီထုပ်",qty:"500g",img:"imgs/86_北京包菜.png",p:0,u:"kg"},
+  {zh:"螺丝椒",my:"ကောက်ကြောင်းငရုတ်သီး",qty:"250g",img:"imgs/87_螺丝椒.png",p:0,u:"kg"},
+  {zh:"松花菜",my:"ပန်းဂေါ်ဖီဖြူ",qty:"500g",img:"imgs/88_松花菜.png",p:0,u:"kg"}
 ];
 
 const categories = [
   {zh:"🍄 菌菇类",my:"မှိုအမျိုးအစား",indices:[0, 9, 21, 34, 44, 51, 63]},
-  {zh:"🥬 叶菜类",my:"အရွက်ဟင်းသီးဟင်းရွက်",indices:[2, 4, 5, 8, 11, 17, 19, 23, 25, 26, 28, 29, 30, 37, 42, 59, 60, 61, 62, 64, 66, 67, 70, 75, 81, 85, 87]},
-  {zh:"🥗 生菜类",my:"သုပ်ဆာလတ်အမျိုးအစား",indices:[20, 35, 83]},
-  {zh:"🥕 根茎类",my:"အမြစ်နှင့်အတောင်အမျိုးအစား",indices:[1, 14, 22, 32, 47, 48, 50, 65, 71, 72, 76, 77]},
+  {zh:"🥬 叶菜类",my:"အရွက်ဟင်းသီးဟင်းရွက်",indices:[2, 5, 11, 17, 19, 20, 23, 25, 26, 28, 29, 30, 35, 42, 59, 60, 61, 62, 64, 66, 67, 70, 75, 81, 83, 85]},
+  {zh:"🥦 花菜类",my:"ပန်းဂေါ်ဖီအမျိုးအစား",indices:[37, 77, 87]},
+  {zh:"🥕 根茎类",my:"အမြစ်နှင့်အတောင်အမျိုးအစား",indices:[1, 14, 22, 32, 47, 48, 50, 65, 71, 72, 76]},
   {zh:"🫘 豆类",my:"ပဲအမျိုးအစား",indices:[3, 16, 18, 24, 41, 43, 74]},
-  {zh:"🍆 瓜茄类",my:"သခွားသီးနှင့်ခရမ်းသီးအမျိုးအစား",indices:[6, 10, 40, 45, 49, 52, 56, 58, 73, 84]},
+  {zh:"🍆 瓜茄类",my:"သခွားသီးနှင့်ခရမ်းသီးအမျိုးအစား",indices:[6, 7, 10, 12, 40, 45, 49, 52, 56, 58, 68, 73, 84]},
   {zh:"🌶️ 椒类",my:"ငရုတ်သီးအမျိုးအစား",indices:[27, 33, 39, 46, 80, 86]},
-  {zh:"🍅 番茄类",my:"ခရမ်းချဉ်သီးအမျိုးအစား",indices:[7, 12, 68]},
   {zh:"🍋 柑橘类",my:"သံပရာအမျိုးအစား",indices:[53, 54, 69]},
   {zh:"🟨 豆腐类",my:"ပဲပိစပ်အမျိုးအစား",indices:[13, 31, 57, 79, 82]},
   {zh:"🍜 面食类",my:"ခေါက်ဆွဲအမျိုးအစား",indices:[15, 36, 55, 78]},
-  {zh:"🧅 葱类",my:"ကြက်သွန်နီအမျိုးအစား",indices:[38]}
+  {zh:"🧅 葱类",my:"ကြက်သွန်နီအမျိုးအစား",indices:[4, 8, 38]}
 ];
 
 const svgs = {
@@ -367,7 +428,7 @@ function renderCategories(){
     categories.forEach(function(cat,ci){
       const btn=document.createElement('button');
       btn.className='cat-nav-btn';
-      btn.innerHTML='<span class="cat-nav-btn-zh">'+cat.zh+'</span><span class="cat-nav-btn-my">'+cat.my+'</span>';
+      btn.innerHTML='<div class="cat-nav-btn-wrap"><span class="cat-nav-btn-zh">'+cat.zh+'</span><span class="cat-nav-badge" id="nav-badge-'+ci+'"></span></div><span class="cat-nav-btn-my">'+cat.my+'</span>';
       btn.onclick=function(){
         const sec=document.getElementById('cat-sec-'+ci);
         if(sec){sec.scrollIntoView({behavior:'smooth',block:'start'});}
@@ -431,12 +492,17 @@ const imgSrc='imgs/'+String(i+1).padStart(2,'0')+'_'+baseName+'.png';
       img.alt=item.zh;
       img.onerror=function(){imgWrap.innerHTML=svgHtml;};
       imgWrap.appendChild(img);
+      const priceBar=document.createElement('div');
+      priceBar.className='cprice-bar';
+      priceBar.id='cprice-'+i;
+      if(item.p>0){priceBar.textContent='SGD '+item.p.toFixed(2)+'/'+(item.u||'kg');priceBar.style.display='block';}
       const info=document.createElement('div');
       info.className='cinfo';
       info.innerHTML='<div class="czh">'+item.zh+'</div><div class="cmy">'+item.my+'</div><div class="cqty">'+item.qty+'</div>';
       c.appendChild(tick);
       c.appendChild(imgWrap);
       c.appendChild(qtyBar);
+      c.appendChild(priceBar);
       c.appendChild(info);
       c.onclick=function(){toggle(i);};
       grid.appendChild(c);
@@ -453,6 +519,8 @@ function updateCatCounts(){
     const n=cat.indices.filter(function(i){return sel.has(i);}).length;
     const el=document.getElementById('cat-count-'+ci);
     if(el){el.textContent=n>0?n+' ✓':'';el.style.display=n>0?'block':'none';}
+    const badge=document.getElementById('nav-badge-'+ci);
+    if(badge){badge.textContent=n;badge.style.display=n>0?'flex':'none';}
   });
 }
 
@@ -521,55 +589,222 @@ function update(){
   body.querySelectorAll('.cart-item,.cart-cat-header').forEach(el=>el.remove());
   if(!n){
     if(empty) empty.style.display='block';
+    document.getElementById('cart-total-area').innerHTML='';
+    updateMobileBar(0);
     return;
   }
   if(empty) empty.style.display='none';
-  let globalOrder=0;
+  let globalOrder=0, totalSGD=0, missingPrice=false;
   categories.forEach(function(cat){
     const catItems=cat.indices.filter(function(i){return sel.has(i);});
     if(!catItems.length) return;
-    // category header
     const hdr=document.createElement('div');
     hdr.className='cart-cat-header';
     hdr.innerHTML='<div style="flex:1">'+'<span class="cart-cat-title">'+cat.zh+'</span>'+'<div style="font-size:11px;color:#5a8a6a;font-family:\"Noto Sans Myanmar\",sans-serif;margin-top:1px">'+cat.my+'</div>'+'</div>'+'<div style="text-align:center"><span class="cart-cat-count">'+catItems.length+'样</span><div style="font-size:10px;color:#5a8a6a;font-family:\"Noto Sans Myanmar\",sans-serif">'+catItems.length+'မျိုး</div></div>';
     body.appendChild(hdr);
-    // items sorted by selection order
     catItems.sort(function(a,b){return sel.get(a).order-sel.get(b).order;});
     catItems.forEach(function(i){
       globalOrder++;
       const e=sel.get(i);
+      const sub=calcSubtotal(items[i],e.qty);
+      if(sub!==null) totalSGD+=sub; else if(items[i].p>0||items[i].u) missingPrice=true;
+      const multHtml='<div class="cart-right-mult">×'+e.qty+'</div>';
+      const priceHtml=sub!==null?'<div class="cart-right-price">SGD '+sub.toFixed(2)+'</div>':'';
       const row=document.createElement('div');
       row.className='cart-item';
       row.innerHTML='<span class="cart-item-num">'+globalOrder+'.</span>'
         +'<div class="cart-item-info">'
           +'<div class="cart-item-zh">'+items[i].zh+'</div>'
-          +'<div class="cart-item-zh" style="font-size:12px;font-weight:400;color:#999">'+items[i].qty+'</div>'
           +'<div class="cart-item-my">'+items[i].my+'</div>'
+          +'<div class="cart-item-qtyline">'+items[i].qty+'</div>'
         +'</div>'
-        +'<div class="cart-item-badge">'
-          +'<span class="cart-item-badge-qty">'+e.qty+'</span>'
-        +'</div>';
+        +'<div class="cart-right">'+multHtml+priceHtml+'</div>';
       body.appendChild(row);
     });
   });
+  const ta=document.getElementById('cart-total-area');
+  if(totalSGD>0){
+    const gst=totalSGD*0.09;
+    const afterGst=totalSGD+gst;
+    const missingHtml=missingPrice?'<div class="cart-total-missing">* 部分菜品未设价格 <span style="font-family:\'Noto Sans Myanmar\',sans-serif">/ အချို့ မသတ်မှတ်ရသေး</span></div>':'';
+    ta.innerHTML=missingHtml
+      +'<div class="cart-total-row"><div class="cart-total-label">小计<div class="cart-total-my">ကုန်ကျစရိတ်</div></div><div class="cart-total-amt" style="color:#888;font-weight:500">SGD '+totalSGD.toFixed(2)+'</div></div>'
+      +'<div class="cart-total-row"><div class="cart-total-label">GST 9%<div class="cart-total-my">ကုန်စည်ဝန်ဆောင်မှုခွန်</div></div><div class="cart-total-amt" style="color:#888;font-weight:500">SGD '+gst.toFixed(2)+'</div></div>'
+      +'<div class="cart-total-row" style="border-top:1px solid #d0ead8;padding-top:8px;margin-top:4px"><div class="cart-total-label" style="font-weight:700;color:#1a1a1a">税后合计<div class="cart-total-my" style="color:#2d6a4f">GST အပါစုစုပေါင်း</div></div><div class="cart-total-amt" style="font-size:16px;color:#1a1a1a">SGD '+afterGst.toFixed(2)+'</div></div>';
+  } else {
+    ta.innerHTML='';
+  }
+  updateMobileBar(totalSGD);
 }
 
-function reset(){sel.clear();counter=0;renderCategories();
-function fixRightPanel(){
-  const nav=document.getElementById('cat-nav');
+function calcSubtotal(item,cartQty){
+  if(!item.p||!item.u) return null;
+  if(item.u==='kg'){
+    const m=item.qty.match(/(\d+(?:\.\d+)?)\s*g/);
+    if(!m) return null;
+    return item.p*(parseFloat(m[1])/1000)*cartQty;
+  }
+  if(item.u==='pkt'){
+    const m=item.qty.match(/^(\d+(?:\.\d+)?)\s*pkt/i);
+    return item.p*(m?parseFloat(m[1]):1)*cartQty;
+  }
+  return null;
+}
+
+function updateCardPrice(i){
+  const el=document.getElementById('cprice-'+i);
+  if(!el) return;
+  const item=items[i];
+  if(item.p>0){el.textContent='SGD '+item.p.toFixed(2)+'/'+(item.u||'kg');el.style.display='block';}
+  else{el.textContent='';el.style.display='none';}
+}
+
+function openPricePanel(){
+  const list=document.getElementById('price-list');
+  list.innerHTML='';
+  categories.forEach(function(cat){
+    const ch=document.createElement('div');
+    ch.className='price-cat-hdr';
+    ch.textContent=cat.zh;
+    list.appendChild(ch);
+    cat.indices.forEach(function(i){
+      const item=items[i];
+      const row=document.createElement('div');
+      row.className='price-row';
+      row.innerHTML='<div class="price-row-info">'
+        +'<div class="price-row-zh">'+item.zh+'</div>'
+        +'<div class="price-row-qty">'+item.qty+'</div>'
+        +'</div>'
+        +'<span style="font-size:12px;color:#888">SGD</span>'
+        +'<input class="price-input" type="number" min="0" step="0.01" placeholder="0.00" value="'+(item.p>0?item.p:'')+'" data-idx="'+i+'">'
+        +'<select class="price-unit-sel" data-idx="'+i+'">'
+        +'<option value="kg"'+(item.u==='kg'?' selected':'')+'>/ kg</option>'
+        +'<option value="pkt"'+(item.u==='pkt'?' selected':'')+'>/ pkt</option>'
+        +'<option value=""'+(!item.u?' selected':'')+'">—</option>'
+        +'</select>';
+      list.appendChild(row);
+    });
+  });
+  list.querySelectorAll('.price-input').forEach(function(inp){
+    inp.addEventListener('input',function(){
+      const i=parseInt(this.dataset.idx);
+      items[i].p=parseFloat(this.value)||0;
+      updateCardPrice(i);
+      update();
+      updatePriceProgress();
+    });
+  });
+  list.querySelectorAll('.price-unit-sel').forEach(function(sel){
+    sel.addEventListener('change',function(){
+      const i=parseInt(this.dataset.idx);
+      items[i].u=this.value;
+      updateCardPrice(i);
+      update();
+    });
+  });
+  updatePriceProgress();
+  document.getElementById('price-overlay').style.display='block';
+}
+
+function closePricePanel(){
+  document.getElementById('price-overlay').style.display='none';
+}
+
+function exportPrices(){
+  const data=items.map(function(item){return [item.p,item.u];});
+  navigator.clipboard.writeText(JSON.stringify(data)).then(function(){
+    const t=document.getElementById('toast');
+    t.innerHTML='✅ 价格配置已复制，发给 Claude 即可保存';
+    t.style.display='block';
+    setTimeout(function(){t.style.display='none';},2500);
+  });
+}
+
+
+let gridCols=4;
+function toggleGrid(){
+  gridCols=gridCols===4?3:4;
+  document.querySelectorAll('.cat-grid').forEach(function(g){g.classList.toggle('cols3',gridCols===3);});
+  const btn=document.getElementById('grid-toggle');
+  if(btn)btn.textContent=gridCols===4?'⊞ 3列':'⊞ 4列';
+}
+
+function filterItems(q){
+  q=(q||'').trim().toLowerCase();
+  let anyVisible=false;
+  categories.forEach(function(cat,ci){
+    const sec=document.getElementById('cat-sec-'+ci);
+    if(!sec) return;
+    let catVisible=false;
+    cat.indices.forEach(function(i){
+      const c=document.getElementById('card-'+i);
+      if(!c) return;
+      const match=!q||items[i].zh.toLowerCase().includes(q)||items[i].my.toLowerCase().includes(q);
+      c.style.display=match?'':'none';
+      if(match) catVisible=true;
+    });
+    sec.style.display=catVisible?'':'none';
+    if(catVisible) anyVisible=true;
+  });
+  const nr=document.getElementById('no-results');
+  if(nr) nr.style.display=(anyVisible||!q)?'none':'block';
+}
+
+function toggleMobileCart(){
   const rp=document.querySelector('.right-panel');
-  if(!nav||!rp) return;
-  const navH=nav.offsetHeight;
-  rp.style.top=navH+'px';
-  rp.style.height='calc(100vh - '+navH+'px)';
+  const ov=document.getElementById('mobile-overlay');
+  if(!rp) return;
+  if(rp.classList.contains('mobile-open')){closeMobileCart();}
+  else{rp.classList.add('mobile-open');if(ov)ov.classList.add('active');document.body.style.overflow='hidden';}
 }
-fixRightPanel();
-window.addEventListener('resize', fixRightPanel);
 
-// dynamically set sticky positions based on actual header height
+function closeMobileCart(){
+  const rp=document.querySelector('.right-panel');
+  const ov=document.getElementById('mobile-overlay');
+  if(rp)rp.classList.remove('mobile-open');
+  if(ov)ov.classList.remove('active');
+  document.body.style.overflow='';
 }
+
+function updateMobileBar(totalSGD){
+  const n=sel.size;
+  const countEl=document.getElementById('mobile-bar-count');
+  const totalEl=document.getElementById('mobile-bar-total');
+  if(!countEl) return;
+  if(n===0){countEl.textContent='尚未选购';totalEl.textContent='မရွေးရသေးပါ';}
+  else{
+    countEl.textContent='已选 '+n+' 样';
+    if(totalSGD>0){totalEl.textContent='SGD '+(totalSGD*1.09).toFixed(2)+' (含GST)';}
+    else{totalEl.textContent=n+' မျိုး ရွေးရည်';}
+  }
+}
+
+function updatePriceProgress(){
+  const n=items.filter(function(it){return it.p>0;}).length;
+  const el=document.getElementById('price-progress');
+  if(el)el.textContent=n+'/'+items.length;
+}
+
+function reset(){sel.clear();counter=0;renderCategories();update();}
+function fixRightPanel(){
+  const sc=document.getElementById('scroll-container');
+  const rp=document.querySelector('.right-panel');
+  if(!sc||!rp) return;
+  rp.style.height=sc.offsetHeight+'px';
+}
+window.addEventListener('resize', fixRightPanel);
 function selAll(){items.forEach(function(_,i){if(!sel.has(i)){counter++;sel.set(i,{order:counter,qty:1});}});renderCategories();}
 renderCategories();
+fixRightPanel();
+updatePriceProgress();
 </script>
+<div class="mobile-overlay" id="mobile-overlay" onclick="closeMobileCart()"></div>
+<div class="mobile-bar" id="mobile-bar">
+  <div class="mobile-bar-info">
+    <div class="mobile-bar-count" id="mobile-bar-count">尚未选购</div>
+    <div class="mobile-bar-total" id="mobile-bar-total">မရွေးရသေးပါ</div>
+  </div>
+  <button class="mobile-bar-open" onclick="toggleMobileCart()">🛒 购物车 ↑</button>
+</div>
 </body>
 </html>
